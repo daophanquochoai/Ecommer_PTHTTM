@@ -1,8 +1,8 @@
 import React from 'react';
 import BreadCrumb from "../components/Body/BreadCrumb.tsx";
-import TitleAbout from "../components/Contact/TitleAbout.tsx";
-import FormMap from "../components/Contact/FormMap.tsx";
 import {NavLink} from "react-router-dom";
+import Policy from "../components/Body/Policy.tsx";
+import ListProduct from "../components/Product/ListProduct.tsx";
 const bread: object  = [
     {
         title: String,
@@ -11,22 +11,22 @@ const bread: object  = [
         title: String,
     }
 ]
-const Contact : React.FC = () => {
-    const bread: object  = [
+const ProductPage : React.FC = () => {
+    const bread = [
         {
-            title: <NavLink to={'/'}>HOME</NavLink>,
+            title : <NavLink to={'/'}>HOME</NavLink>
         },
         {
-            title: <span className={'text-red-500'}>CONTACT</span>,
+            title : <span className={'text-red-500'}>PRODUCT</span>
         }
     ]
     return (
         <div className={'mx-[5%]'}>
             <BreadCrumb bread={bread}/>
-            <TitleAbout />
-            <FormMap />
+            <ListProduct />
+            <Policy />
         </div>
     );
 };
 
-export default Contact;
+export default ProductPage;

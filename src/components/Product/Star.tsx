@@ -1,0 +1,52 @@
+import React, {useState} from 'react';
+import {FaStar} from "react-icons/fa";
+import {Radio, Space} from "antd";
+
+const Star : React.FC = () => {
+
+    const [checkBox, setCheckBox ] = useState<number>(1);
+    const checkBoxHandler = (e) => {
+        setCheckBox(e.target.value)
+    }
+    return (
+        <div className={'bg-white mt-6 p-4'}>
+            <div>
+                <span className={'text-2xl font-bold pb-2 border-red-500 border-b-2'}>Rate</span>
+            </div>
+            <div className={'mt-6'}>
+                <Radio.Group onChange={(e) =>{checkBoxHandler(e)}} value={checkBox}>
+                    <Space direction="vertical">
+                        <Radio value={5}
+                        >
+                            <div className={'flex items-center gap-2 text-base'}>
+                                5<FaStar />
+                            </div>
+                        </Radio>
+                        <Radio value={4}>
+                            <div className={'flex items-center gap-2 text-base'}>
+                                từ 4<FaStar />
+                            </div>
+                        </Radio>
+                        <Radio value={3}>
+                            <div className={'flex items-center gap-2 text-base'}>
+                                từ 3<FaStar />
+                            </div>
+                        </Radio>
+                        <Radio value={2}>
+                            <div className={'flex items-center gap-2 text-base'}>
+                                từ 2<FaStar />
+                            </div>
+                        </Radio>
+                        <Radio value={1}>
+                            <div className={'flex items-center gap-2 text-base'}>
+                                từ 1<FaStar />
+                            </div>
+                        </Radio>
+                    </Space>
+                </Radio.Group>
+            </div>
+        </div>
+    );
+};
+
+export default Star;

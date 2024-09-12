@@ -7,6 +7,7 @@ import Header from "./components/Header/Header.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
 const App : React.FC = ()  => {
   const [count, setCount] = useState(0)
 
@@ -19,6 +20,7 @@ const App : React.FC = ()  => {
                   <Route element={<Home />} path={'/'}/>
                   <Route element={<About />} path={'/about'}/>
                   <Route element={<Contact />} path={'/contact'}/>
+                  <Route element={<ProductPage />} path={'/category'}/>
               </Routes>
               <Footer />
           </div>

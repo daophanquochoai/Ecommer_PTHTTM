@@ -1,10 +1,24 @@
 import {FaCaretSquareLeft, FaCaretSquareRight, FaChevronRight, FaStar} from "react-icons/fa";
 import {FaRegStarHalfStroke} from "react-icons/fa6";
 import {CiHeart, CiSearch, CiShoppingCart, CiStar} from "react-icons/ci";
-const props = {
-    title : String
+import Product from "./Product.tsx";
+type Props = {
+    title : string
 }
-const ListProduct = (props) => {
+
+
+
+const ListProduct = (props : Props) => {
+    const Props = {
+        sale : 20,
+        image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg',
+        like : true,
+        title : 'Microsoft Xbox One S Controller – Gears 5 Kait Diaz',
+        star : 4,
+        price : 100,
+        priceOld : 120,
+        selled : 8
+    }
     return (
         <div className={'mx-[10%] mt-8'}>
             <div className={'bg-white w-full py-4'}>
@@ -31,156 +45,11 @@ const ListProduct = (props) => {
                     </div>
                 </div>
                 <div className={'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-4'}>
-                    <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-                        <div className={'relative'}>
-                            <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>-20%</span>
-                            <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg'} className={'w-full h-full object-center'} alt={''}/>
-                            <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                                <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                                <CiHeart className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                                <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                            </div>
-                        </div>
-                        <div className={'p-2 z-10 relative bg-white'}>
-                            <div>
-                                <h4 className={'text-[11px] md:text-xl font-bold'}>Microsoft Xbox One S Controller – Gears 5 Kait Diaz</h4>
-                            </div>
-                            <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
-                                <div className={'flex'}>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaRegStarHalfStroke className={'text-[11px] sm:text-base'}/>
-                                    <CiStar className={'text-[11px] sm:text-base'}/>
-                                </div>
-                                <p className={'text-[11px] sm:text-base text-gray-400'}>8 Sold</p>
-                            </div>
-                            <div className={'flex flex-col md:flex-row gap-y-1 items-center md:gap-5'}>
-                                <p className={'text-[11px] sm:text-base'}>$109.00</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>$139.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-                        <div className={'relative'}>
-                            <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>-20%</span>
-                            <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg'} className={'w-full h-full object-center'} alt={''}/>
-                            <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                                <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                                <CiHeart className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                                <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                            </div>
-                        </div>
-                        <div className={'p-2 z-10 relative bg-white'}>
-                            <div>
-                                <h4 className={'text-[11px] md:text-xl font-bold'}>Microsoft Xbox One S Controller – Gears 5 Kait Diaz</h4>
-                            </div>
-                            <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
-                                <div className={'flex'}>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaRegStarHalfStroke className={'text-[11px] sm:text-base'}/>
-                                    <CiStar className={'text-[11px] sm:text-base'}/>
-                                </div>
-                                <p className={'text-[11px] sm:text-base text-gray-400'}>8 Sold</p>
-                            </div>
-                            <div className={'flex flex-col md:flex-row gap-y-1 items-center md:gap-5'}>
-                                <p className={'text-[11px] sm:text-base'}>$109.00</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>$139.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-                        <div className={'relative'}>
-                            <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>-20%</span>
-                            <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg'} className={'w-full h-full object-center'} alt={''}/>
-                            <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                                <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                                <CiHeart className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                                <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                            </div>
-                        </div>
-                        <div className={'p-2 z-10 relative bg-white'}>
-                            <div>
-                                <h4 className={'text-[11px] md:text-xl font-bold'}>Microsoft Xbox One S Controller – Gears 5 Kait Diaz</h4>
-                            </div>
-                            <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
-                                <div className={'flex'}>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaRegStarHalfStroke className={'text-[11px] sm:text-base'}/>
-                                    <CiStar className={'text-[11px] sm:text-base'}/>
-                                </div>
-                                <p className={'text-[11px] sm:text-base text-gray-400'}>8 Sold</p>
-                            </div>
-                            <div className={'flex flex-col md:flex-row gap-y-1 items-center md:gap-5'}>
-                                <p className={'text-[11px] sm:text-base'}>$109.00</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>$139.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-                        <div className={'relative'}>
-                            <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>-20%</span>
-                            <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg'} className={'w-full h-full object-center'} alt={''}/>
-                            <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                                <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                                <CiHeart className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                                <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                            </div>
-                        </div>
-                        <div className={'p-2 z-10 relative bg-white'}>
-                            <div>
-                                <h4 className={'text-[11px] md:text-xl font-bold'}>Microsoft Xbox One S Controller – Gears 5 Kait Diaz</h4>
-                            </div>
-                            <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
-                                <div className={'flex'}>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaRegStarHalfStroke className={'text-[11px] sm:text-base'}/>
-                                    <CiStar className={'text-[11px] sm:text-base'}/>
-                                </div>
-                                <p className={'text-[11px] sm:text-base text-gray-400'}>8 Sold</p>
-                            </div>
-                            <div className={'flex flex-col md:flex-row gap-y-1 items-center md:gap-5'}>
-                                <p className={'text-[11px] sm:text-base'}>$109.00</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>$139.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-                        <div className={'relative'}>
-                            <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>-20%</span>
-                            <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg'} className={'w-full h-full object-center'} alt={''}/>
-                            <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                                <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                                <CiHeart className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                                <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
-                            </div>
-                        </div>
-                        <div className={'p-2 z-10 relative bg-white'}>
-                            <div>
-                                <h4 className={'text-[11px] md:text-xl font-bold'}>Microsoft Xbox One S Controller – Gears 5 Kait Diaz</h4>
-                            </div>
-                            <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
-                                <div className={'flex'}>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaStar className={'text-[11px] sm:text-base'}/>
-                                    <FaRegStarHalfStroke className={'text-[11px] sm:text-base'}/>
-                                    <CiStar className={'text-[11px] sm:text-base'}/>
-                                </div>
-                                <p className={'text-[11px] sm:text-base text-gray-400'}>8 Sold</p>
-                            </div>
-                            <div className={'flex flex-col md:flex-row gap-y-1 items-center md:gap-5'}>
-                                <p className={'text-[11px] sm:text-base'}>$109.00</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>$139.00</del>
-                            </div>
-                        </div>
-                    </div>
+                    <Product {...Props}/>
+                    <Product {...Props}/>
+                    <Product {...Props}/>
+                    <Product {...Props}/>
+                    <Product {...Props}/>
                 </div>
                 <div className={'flex items-center justify-end px-7'}>
                     <div className={'flex gap-3'}>
