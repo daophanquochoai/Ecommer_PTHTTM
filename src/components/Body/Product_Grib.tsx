@@ -14,7 +14,7 @@ type Props = {
 const ProductGrib = ( props : Props ) => {
     return (
         <div className={'px-7'}>
-            <div className={'border grid grid-cols-[1fr_3fr] hover:scale-105 transition-all duration-500 group cursor-pointer'}>
+            <div className={'border grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_3fr] hover:scale-105 transition-all duration-500 group cursor-pointer'}>
                 <div className={'relative'}>
                     <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>{props.sale}%</span>
                     <img src={props.image} className={'w-full h-full object-center'} alt={''}/>
@@ -26,7 +26,7 @@ const ProductGrib = ( props : Props ) => {
                 </div>
                 <div className={'p-7 flex flex-col gap-4 z-10 relative bg-white'}>
                     <div>
-                        <h4 className={'text-[11px] md:text-xl font-bold shortcut'}>{props.title}</h4>
+                        <h4 className={'text-[11px] text-base md:text-xl font-bold shortcut'}>{props.title}</h4>
                     </div>
                     <div className={'mt-1 flex flex-col md:flex-row gap-y-2 items-center justify-between'}>
                         <div className={'flex'}>

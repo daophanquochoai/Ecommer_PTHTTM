@@ -38,7 +38,7 @@ const RenderProduct: React.FC = () => {
     return (
         <div className={'mx-4'}>
             <div className={'bg-white'}>
-                <div className={'flex justify-between items-center p-4'}>
+                <div className={'flex flex-col md:flex-row gap-2 justify-between items-center p-4'}>
                     <div className={'flex items-center gap-4'}>
                         <div onClick={() => setGrib(true)} className={`p-2 border-2 cursor-pointer ${grib ? 'bg-red-500 text-white' : 'hover:bg-red-500 hover:text-white'}`}><RxViewGrid /></div>
                         <div onClick={()=>setGrib(false)} className={`p-2 border-2 text-xl cursor-pointer ${!grib ? 'bg-red-500 text-white' : 'hover:bg-red-500 hover:text-white'}`}><CiViewTimeline /></div>
@@ -57,7 +57,7 @@ const RenderProduct: React.FC = () => {
                     </div>
                 </div>
                 {/* render product */}
-                <div className={`grid ${grib ? 'grid-cols-4' : 'grid-cols-1'} p-4 gap-4`}>
+                <div className={`grid ${grib ? 'sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1'} p-4 gap-4`}>
                     {
                         grib ?
                                 <>
@@ -99,6 +99,7 @@ const RenderProduct: React.FC = () => {
                             total={100}
                             showSizeChanger={false}
                             defaultPageSize={8}
+                            responsive={true}
                         />
                     </div>
                 </div>

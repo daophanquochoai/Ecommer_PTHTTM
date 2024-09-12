@@ -11,35 +11,35 @@ const Star : React.FC = () => {
     return (
         <div className={'bg-white mt-6 p-4'}>
             <div>
-                <span className={'text-2xl font-bold pb-2 border-red-500 border-b-2'}>Rate</span>
+                <span className={'text-base md:text-2xl font-bold pb-2 border-red-500 border-b-2'}>Rate</span>
             </div>
             <div className={'mt-6'}>
                 <Radio.Group onChange={(e) =>{checkBoxHandler(e)}} value={checkBox}>
                     <Space direction="vertical">
                         <Radio value={5}
                         >
-                            <div className={'flex items-center gap-2 text-base'}>
-                                5<FaStar />
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                5<FaStar className={'text-yellow-300'}/>
                             </div>
                         </Radio>
                         <Radio value={4}>
-                            <div className={'flex items-center gap-2 text-base'}>
-                                từ 4<FaStar />
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                từ 4<FaStar className={'text-yellow-300'}/>
                             </div>
                         </Radio>
                         <Radio value={3}>
-                            <div className={'flex items-center gap-2 text-base'}>
-                                từ 3<FaStar />
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                từ 3<FaStar className={'text-yellow-300'}/>
                             </div>
                         </Radio>
                         <Radio value={2}>
-                            <div className={'flex items-center gap-2 text-base'}>
-                                từ 2<FaStar />
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                từ 2<FaStar className={'text-yellow-300'} />
                             </div>
                         </Radio>
                         <Radio value={1}>
-                            <div className={'flex items-center gap-2 text-base'}>
-                                từ 1<FaStar />
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                từ 1<FaStar className={'text-yellow-300'}/>
                             </div>
                         </Radio>
                     </Space>

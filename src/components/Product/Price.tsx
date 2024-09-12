@@ -5,7 +5,7 @@ const Price : React.FC = () => {
     return (
         <div className={'bg-white mt-6 p-4'}>
             <div>
-                <span className={'text-2xl font-bold pb-2 border-b-2 border-red-500'}>Price</span>
+                <span className={'text-base md:text-2xl font-bold pb-2 border-b-2 border-red-500'}>Price</span>
             </div>
             <div className={'mt-6'}>
                 <Slider range={{ draggableTrack: true }} max={1000} defaultValue={price} onChange={(e) => setPrice(e)}
@@ -13,7 +13,7 @@ const Price : React.FC = () => {
                         handleStyle={{ boxShadow: "#ef4444" }}
                 />
             </div>
-            <p>Price : <span>${price[0]}</span> — <span>${price[1]}</span></p>
+            <p className={'text-[14px]'}>Price : <span>${price[0]}</span> — <span>${price[1]}</span></p>
         </div>
     );
 };
