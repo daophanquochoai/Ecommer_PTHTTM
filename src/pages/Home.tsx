@@ -10,14 +10,12 @@ import Footer from "../components/Footer/Footer.tsx";
 const Home = () => {
     return (
         <div>
-            <Header />
             <Slider/>
             <Trending />
             <Sale />
             <ListProduct title={'Flash Deals'}/>
             <ListProduct title={'Recommend To You'}/>
             <Policy />
-            <Footer />
         </div>
     );
 };
