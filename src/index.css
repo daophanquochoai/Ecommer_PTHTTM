@@ -11,6 +11,11 @@ html {
     scroll-behavior: smooth;
 }
 
+::selection {
+    @apply bg-red-500;
+    @apply text-white
+}
+
 a.active  {
     @apply text-red-400
 }
@@ -53,4 +58,13 @@ a.active  {
 .ant-rate-star .ant-rate-star-full div{
     @apply text-base;
     @apply text-xs;
+}
+
+.swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal{
+    position: static;
+    @apply mt-5
+}
+.swiper-pagination-bullet-active {
+    background:  rgba(239,68,68);
+    border-color: rgba(239,68,68, 0.88) !important;
 }
