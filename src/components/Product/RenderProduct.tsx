@@ -16,7 +16,7 @@ const RenderProduct: React.FC = () => {
     const [filter , setFilter] = useState<string>('Relate');
     const [page, setPage] = useState<number>(1)
     const [grib, setGrib] = useState<boolean>(true)
-    const filteHandler = (e) => {
+    const filterHandler = (e) => {
         setFilter(e)
     }
     const Props = {
@@ -52,7 +52,7 @@ const RenderProduct: React.FC = () => {
                             options={items}
                             value={filter}
                             status="error"
-                            onChange={ (e)=> filteHandler(e)}
+                            onChange={ (e)=> filterHandler(e)}
                         />
                     </div>
                 </div>

@@ -21,7 +21,7 @@ const Contact : React.FC = () => {
         }
     ]
     return (
-        <div className={'mx-[5%]'}>
+        <div className={'mx-[5%] mt-3'}>
             <BreadCrumb bread={bread}/>
             <TitleAbout />
             <FormMap />

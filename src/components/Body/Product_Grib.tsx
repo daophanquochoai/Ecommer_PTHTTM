@@ -1,6 +1,7 @@
 import React from 'react';
 import {CiHeart, CiSearch, CiShoppingCart} from "react-icons/ci";
 import {Rate} from "antd";
+import {useNavigate} from "react-router-dom";
 type Props = {
     sale : number,
     image : string,
@@ -12,6 +13,8 @@ type Props = {
     selled : number
 }
 const ProductGrib = ( props : Props ) => {
+
+    const navigate = useNavigate()
     return (
         <div className={'px-7'}>
             <div className={'border grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_3fr] hover:scale-105 transition-all duration-500 group cursor-pointer'}>
@@ -24,7 +27,10 @@ const ProductGrib = ( props : Props ) => {
                         <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
                     </div>
                 </div>
-                <div className={'p-7 flex flex-col gap-4 z-10 relative bg-white'}>
+                <div onClick={()=>{
+                    scrollTo(0,0);
+                    navigate(`/category/${[props.title]}`)
+                }} className={'p-7 flex flex-col gap-4 z-10 relative bg-white'}>
                     <div>
                         <h4 className={'text-[11px] text-base md:text-xl font-bold shortcut'}>{props.title}</h4>
                     </div>

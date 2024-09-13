@@ -1,6 +1,7 @@
 import React from 'react';
 import {CiHeart, CiSearch, CiShoppingCart, CiStar} from "react-icons/ci";
 import {Rate} from "antd";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     sale : number,
@@ -14,6 +15,8 @@ type Props = {
 }
 const Product : React.FC = ( props : Props ) => {
 
+    const navigate = useNavigate()
+
     return (
         <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
             <div className={'relative'}>
@@ -25,7 +28,10 @@ const Product : React.FC = ( props : Props ) => {
                     <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
                 </div>
             </div>
-            <div className={'p-2 z-10 relative bg-white'}>
+            <div onClick={()=>{
+                scrollTo(0,0);
+                navigate(`/category/${[props.title]}`)
+            }} className={'p-2 z-10 relative bg-white'}>
                 <div>
                     <h4 className={'text-[11px] md:text-xl font-bold shortcut'}>{props.title}</h4>
                 </div>

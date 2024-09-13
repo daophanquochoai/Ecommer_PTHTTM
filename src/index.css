@@ -7,6 +7,10 @@
     font-family: Outfit, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 a.active  {
     @apply text-red-400
 }
