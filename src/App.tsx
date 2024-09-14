@@ -9,6 +9,7 @@ import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
+import Blogs from "./pages/Blogs.tsx";
 const App : React.FC = ()  => {
   const [count, setCount] = useState(0)
 
@@ -23,6 +24,7 @@ const App : React.FC = ()  => {
                   <Route element={<Contact />} path={'/contact'}/>
                   <Route element={<ProductPage />} path={'/category'}/>
                   <Route element={<ProductDetail />} path={'/category/:id'}/>
+                  <Route element={<Blogs />} path={'/blogs'}/>
               </Routes>
               <Footer />
           </div>
