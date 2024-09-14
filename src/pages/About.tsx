@@ -9,7 +9,7 @@ import ClientSay from "../components/About/ClientSay.tsx";
 import OurTeam from "../components/About/OurTeam.tsx";
 import Policy from "../components/Body/Policy.tsx";
 
-const bread  = [
+const bread : object[] = [
     {
         title: <NavLink to={'/'}>HOME</NavLink>,
     },

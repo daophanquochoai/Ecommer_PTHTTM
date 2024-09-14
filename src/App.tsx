@@ -10,6 +10,7 @@ import Contact from "./pages/Contact.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import Blogs from "./pages/Blogs.tsx";
+import Cart from "./pages/Cart.tsx";
 const App : React.FC = ()  => {
   const [count, setCount] = useState(0)
 
@@ -25,6 +26,7 @@ const App : React.FC = ()  => {
                   <Route element={<ProductPage />} path={'/category'}/>
                   <Route element={<ProductDetail />} path={'/category/:id'}/>
                   <Route element={<Blogs />} path={'/blogs'}/>
+                  <Route element={<Cart />} path={'/cart'}/>
               </Routes>
               <Footer />
           </div>
