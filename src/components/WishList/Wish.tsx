@@ -1,11 +1,11 @@
 import React from 'react';
-import {Table, TableColumnsType} from "antd";
-import Util from "./Util.tsx";
+import {Table,Button, TableColumnsType} from "antd";
+
 interface DataType {
-    key: React.Key;
+    key : React.Key
     Product: object;
     Price: number;
-    Quantity: number;
+    Date: string;
 }
 const columns: TableColumnsType<DataType> = [
     {
@@ -21,33 +21,28 @@ const columns: TableColumnsType<DataType> = [
     { title: 'Price', dataIndex: 'Price', key: 'Price',
         render : (item) => <p className={'text-center'}>{item}</p>,
         align : 'center',
-        className : 'flex items-center justify-center',
+        responsive : ['sm']
+    },
+    { title: 'Date', dataIndex: 'Date', key: 'Date',
+        align : 'center',
         responsive : ['md']
     },
-    { title: 'Quantity', dataIndex: 'Quantity', key: 'Quantity',
-        align : 'center',
-        // className : 'flex items-center justify-center',
-        render : (item) => (
-            <Util item={item}/>
-        ),
-    },
     {
-        title: 'Subtotal',
-        key: 'subtotal',
-        render : (item : DataType) => <p>{item.Price * item.Quantity}</p>,
+        title: 'Action',
+        key: 'action',
+        render : () => <Button type="primary" danger>Remove</Button>,
         align : 'center',
-        className : 'flex items-center justify-center'
     },
 ];
 const data: DataType[] = [
     {
-        key: 1,
+        key : 1,
         Product: {
             'image' : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42-300x313.jpg',
             'title' : 'Microsoft Xbox One S Controller - Gears 5 Kait Diaz'
         },
         Price: 32,
-        Quantity: 2
+        Date: '10-04-2003'
     },
     {
         key : 2,
@@ -56,10 +51,10 @@ const data: DataType[] = [
             'title' : 'Microsoft Xbox One S Controller - Gears 5 Kait Diaz'
         },
         Price: 32,
-        Quantity: 2
+        Date: '10-04-2003'
     }
 ];
-const TableItem : React.FC = () => {
+const Wish : React.FC = () => {
     const onChange = (e) => {
         console.log(e)
     }
@@ -82,4 +77,4 @@ const TableItem : React.FC = () => {
     );
 };
 
-export default TableItem;
+export default Wish;

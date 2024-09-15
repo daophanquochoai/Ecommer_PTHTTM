@@ -3,6 +3,7 @@ import BreadCrumb from "../components/Body/BreadCrumb.tsx";
 import {NavLink} from "react-router-dom";
 import TableItem from "../components/Cart/TableItem.tsx";
 import TableProcess from "../components/Cart/TableProcess.tsx";
+import Policy from "../components/Body/Policy.tsx";
 
 const bread : object[] = [
     {
@@ -27,6 +28,7 @@ const Cart : React.FC = () => {
                         <button className={'text-white bg-black w-full p-2 mt-3 hover:bg-red-500 transition-all duration-300'}>PROCEES TO CHECKOUT</button>
                     </div>
                 </div>
+                <Policy />
             </div>
         </div>
     )

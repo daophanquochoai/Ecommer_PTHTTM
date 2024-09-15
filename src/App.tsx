@@ -11,6 +11,12 @@ import ProductPage from "./pages/ProductPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import Cart from "./pages/Cart.tsx";
+import WishListPage from "./pages/WishListPage.tsx";
+import Login from "./components/Login_Register/Login.tsx";
+import Login_Register from "./pages/Login_Register.tsx";
+import Register from "./components/Login_Register/Register.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 const App : React.FC = ()  => {
   const [count, setCount] = useState(0)
 
@@ -27,6 +33,9 @@ const App : React.FC = ()  => {
                   <Route element={<ProductDetail />} path={'/category/:id'}/>
                   <Route element={<Blogs />} path={'/blogs'}/>
                   <Route element={<Cart />} path={'/cart'}/>
+                  <Route element={<WishListPage />} path={'/wishlist'}/>
+                  <Route element={<LoginPage />} path={'/login'}/>
+                  <Route element={<RegisterPage />} path={'/register'}/>
               </Routes>
               <Footer />
           </div>

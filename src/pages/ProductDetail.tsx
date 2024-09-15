@@ -14,7 +14,7 @@ const ProductDetail : React.FC = () => {
 
     const [option, setOption] = useState<boolean>(false)
 
-    const bread = [
+    const bread : object[] = [
         {
             title : <NavLink to={'/'}>HOME</NavLink>
         },

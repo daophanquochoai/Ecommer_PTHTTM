@@ -71,3 +71,32 @@ a.active  {
 .ant-table-cell{
     @apply text-center
 }
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    @apply bg-red-500
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox-checked .ant-checkbox-inner {
+    @apply bg-red-500;
+    @apply border-red-500
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner, :where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+    @apply border-red-500;
+    @apply border-2;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox-indeterminate .ant-checkbox-inner:after{
+    @apply bg-red-500;
+}
+
+.ant-table-tbody-virtual-holder-inner .ant-table-row .ant-table-cell{
+    @apply flex items-center justify-center;
+}
+.ant-table-row.ant-table-row-selected .ant-table-cell{
+    background: rgba(239,68,68, 0.3) !important;
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-input-outlined:hover{
+    @apply border-red-500 shadow-red-500;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-input-outlined  {
+    @apply border-red-500 shadow-red-500;
+}
