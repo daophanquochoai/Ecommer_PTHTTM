@@ -100,3 +100,10 @@ a.active  {
 :where(.css-dev-only-do-not-override-qnu6hi).ant-input-outlined  {
     @apply border-red-500 shadow-red-500;
 }
+:where(.css-dev-only-do-not-override-qnu6hi).ant-menu-light .ant-menu-item-selected{
+    background: rgba(239,68,68, 0.3) !important;
+    @apply text-white
+}
+.ant-upload-list .ant-upload-list-picture{
+    @apply flex
+}

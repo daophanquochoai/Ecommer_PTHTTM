@@ -1,44 +1,91 @@
-import React, { useState } from 'react'
-import Home from "./pages/Home.tsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Route, Routes} from "react-router-dom";
-import Header from "./components/Header/Header.tsx";
-import Footer from "./components/Footer/Footer.tsx";
+import {useRoutes} from "react-router-dom";
+import Container from "./pages/Container.tsx";
+import Home from "./pages/Home.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
+import Blogs from "./pages/Blogs.tsx";
 import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
-import ProductPage from "./pages/ProductPage.tsx";
-import ProductDetail from "./pages/ProductDetail.tsx";
-import Blogs from "./pages/Blogs.tsx";
 import Cart from "./pages/Cart.tsx";
 import WishListPage from "./pages/WishListPage.tsx";
-import Login from "./components/Login_Register/Login.tsx";
-import Login_Register from "./pages/Login_Register.tsx";
-import Register from "./components/Login_Register/Register.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import DashBoard from "./pages/DashBoard.tsx";
+import OverView from "./components/DashBoard/OverView.tsx";
+import Chat from "./components/DashBoard/Chat.tsx";
+import Manger from "./pages/Manger.tsx";
+
+export const routers = [
+    {
+        path: "/",
+        element: <Container />, // Đây là component chính của route "/"
+        children: [
+            {
+                index: true, // Route mặc định cho path "/"
+                element: <Home /> // Component hiển thị cho route "/"
+            },
+            {
+                path: '/category',
+                element: <ProductPage />
+            },
+            {
+                path: '/blogs',
+                element: <Blogs />
+            },
+            {
+                path: '/about',
+                element: <About />
+            },
+            {
+                path: '/contact',
+                element: <Contact />
+            },
+            {
+                path: '/cart',
+                element: <Cart />
+            },
+            {
+                path: '/wishlist',
+                element: <WishListPage />
+            },
+            {
+                path: '/login',
+                element: <LoginPage />
+            },
+            {
+                path: '/register',
+                element: <RegisterPage />
+            }
+        ]
+    },
+    {
+        path: '/admin',
+        element: <DashBoard />,
+        children: [
+            {
+                index : true,
+                element: <OverView />
+            },
+            {
+                path: 'chat',
+                element: <Chat />
+            },
+            {
+                path: 'manager',
+                element: <Manger />
+            }
+        ]
+    }
+];
+
 const App : React.FC = ()  => {
-  const [count, setCount] = useState(0)
+    const element = useRoutes(routers);
 
   return (
       <>
           <ToastContainer autoClose={4000}/>
-          <div className={'bg-primary'}>
-              <Header />
-              <Routes>
-                  <Route element={<Home />} path={'/'}/>
-                  <Route element={<About />} path={'/about'}/>
-                  <Route element={<Contact />} path={'/contact'}/>
-                  <Route element={<ProductPage />} path={'/category'}/>
-                  <Route element={<ProductDetail />} path={'/category/:id'}/>
-                  <Route element={<Blogs />} path={'/blogs'}/>
-                  <Route element={<Cart />} path={'/cart'}/>
-                  <Route element={<WishListPage />} path={'/wishlist'}/>
-                  <Route element={<LoginPage />} path={'/login'}/>
-                  <Route element={<RegisterPage />} path={'/register'}/>
-              </Routes>
-              <Footer />
-          </div>
+          {element}
       </>
   )
 }
