@@ -15,6 +15,7 @@ import DashBoard from "./pages/DashBoard.tsx";
 import OverView from "./components/DashBoard/OverView.tsx";
 import Chat from "./components/DashBoard/Chat.tsx";
 import Manger from "./pages/Manger.tsx";
+import Settings from "./pages/Settings.tsx";
 
 export const routers = [
     {
@@ -74,6 +75,10 @@ export const routers = [
             {
                 path: 'manager',
                 element: <Manger />
+            },
+            {
+                path: 'settings',
+                element: <Settings />
             }
         ]
     }

@@ -36,9 +36,14 @@ const items: MenuItem[] = [
         ),
         icon: <GrUserManager />,
     },
+
     {
-        key: 'sub2',
-        label: 'Navigation Three',
+        key: '4',
+        label: (
+            <NavLink to={'/admin/settings'}>
+                Settings
+            </NavLink>
+        ),
         icon: <SettingOutlined />,
     }
 ];
