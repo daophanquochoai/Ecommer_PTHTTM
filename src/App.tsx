@@ -16,6 +16,12 @@ import OverView from "./components/DashBoard/OverView.tsx";
 import Chat from "./components/DashBoard/Chat.tsx";
 import Manger from "./pages/Manger.tsx";
 import Settings from "./pages/Settings.tsx";
+import ProductManage from "./pages/ProductManage.tsx";
+import ProductAdmin from "./components/ProductManage/ProductAdmin.tsx"
+import AddProduct from "./components/ProductManage/AddProduct.tsx";
+import EditProduct from "./components/ProductManage/EditProduct.tsx";
+import AddCategory from "./components/ProductManage/AddCategory.tsx";
+import EditCategory from "./components/ProductManage/EditCategory.tsx";
 
 export const routers = [
     {
@@ -79,6 +85,32 @@ export const routers = [
             {
                 path: 'settings',
                 element: <Settings />
+            },
+            {
+                path: 'products',
+                element: <ProductManage />,
+                children: [
+                    {
+                        index : true,
+                        element: <ProductAdmin />
+                    },
+                    {
+                        path: 'add-product',
+                        element: <AddProduct />
+                    },
+                    {
+                        path: 'edit-product',
+                        element: <EditProduct />
+                    },
+                    {
+                        path: 'add-category',
+                        element: <AddCategory />
+                    },
+                    {
+                        path: 'edit-category',
+                        element: <EditCategory />
+                    }
+                ]
             }
         ]
     }

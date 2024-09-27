@@ -30,7 +30,7 @@ const FormMap : React.FC = () => {
                     </div>
                     <div className={'flex flex-col gap-2'}>
                         <label className={'text-2xl'}>Your Message</label>
-                        <textarea className={'outline-0 border-2 h-36'} r/>
+                        <textarea className={'outline-0 border-2 h-36'} />
                     </div>
                     <div>
                         <button className={'w-full md:w-auto bg-black hover:bg-red-500 text-white py-2 px-4'}>Send Message</button>

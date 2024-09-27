@@ -1,8 +1,6 @@
 import React from 'react';
 import {GetProp, Menu, MenuProps} from "antd";
-import {
-    SettingOutlined,
-} from '@ant-design/icons';
+import {SettingOutlined, ProductOutlined} from '@ant-design/icons';
 import {GrOverview, GrUserManager} from "react-icons/gr";
 import {NavLink} from "react-router-dom";
 import {CiChat1} from "react-icons/ci";
@@ -45,6 +43,17 @@ const items: MenuItem[] = [
             </NavLink>
         ),
         icon: <SettingOutlined />,
+    },
+
+    {
+        key: '5',
+        label: (
+            <NavLink to={'/admin/products'}>
+                Products
+            </NavLink>
+        ),
+        icon: <ProductOutlined />
+
     }
 ];
 
