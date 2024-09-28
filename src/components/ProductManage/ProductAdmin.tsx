@@ -5,7 +5,7 @@ import CategoryList from "./CategoryList.tsx";
 const ProductAdmin : React.FC = () => {
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 mt-3'>
+            <div className='grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4'>
                 <ProductList />
                 <CategoryList />
             </div>

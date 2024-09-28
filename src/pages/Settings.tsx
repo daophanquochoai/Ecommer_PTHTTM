@@ -1,10 +1,13 @@
 import React from 'react';
-import ListSetting from "../components/Settings/ListSetting.tsx";
+import {Outlet} from "react-router-dom";
+
 const Settings : React.FC = () => {
     return (
-        <div>
-            <ListSetting />
-        </div>
+        <>
+            <div>
+                <Outlet />
+            </div>
+        </>
     );
 };
 

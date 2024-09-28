@@ -1,8 +1,19 @@
 import React, { useState }  from 'react';
 import {Upload, DatePicker, Image, Select} from "antd";
 import {GrUploadOption} from "react-icons/gr";
+import BreadCrumb from "../Body/BreadCrumb.tsx";
+import {NavLink} from "react-router-dom";
 
 const dateFormat = 'DD/MM/YYYY';
+
+const bread = [
+    {
+        title : <NavLink to={'/admin/products'}>Products</NavLink>
+    },
+    {
+        title : <span className={'text-red-500'}>Add product</span>
+    }
+]
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -27,7 +38,7 @@ const AddProduct: React.FC = () => {
 
     return (
         <div>
-            <p className='text-left text-2xl font-bold mb-4'>Add product</p>
+            <BreadCrumb bread={bread} />
             <form className='grid grid-cols-1 gap-9'>
                 <div className='flex flex-col md:flex-row gap-9'>
                     <div className='flex-1'>

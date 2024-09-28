@@ -91,7 +91,7 @@ const ProductList : React.FC = () => {
     return (
         <Flex gap="middle" vertical>
           <div>
-              <p>Products</p>
+              <p className='font-bold text-xs md:text-base'>Products</p>
           </div>
           <Flex align="center" gap="middle">
               <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>

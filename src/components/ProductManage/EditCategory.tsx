@@ -2,12 +2,22 @@ import React from 'react';
 import {Select} from "antd";
 import { Flex, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
+import BreadCrumb from "../Body/BreadCrumb.tsx";
 import {NavLink} from "react-router-dom";
 
 interface DataType {
     key: React.Key;
     name: string;
 }
+
+const bread = [
+  {
+      title : <NavLink to={'/admin/products'}>Products</NavLink>
+  },
+  {
+      title : <span className={'text-red-500'}>Edit category</span>
+  }
+]
 
 const columns: TableColumnsType<DataType> = [
     {
@@ -39,7 +49,7 @@ const EditCategory: React.FC = () => {
 
     return (
         <div>
-            <p className='text-left text-2xl font-bold mb-4'>Edit category</p>
+            <BreadCrumb bread={bread} />
             <form className='grid grid-cols-1 gap-9'>
                 <div className='flex flex-col md:flex-row gap-9'>
                     <div className='flex-1'>

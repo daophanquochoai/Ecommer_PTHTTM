@@ -64,7 +64,7 @@ const CategoryList : React.FC = () => {
     return (
         <Flex gap="middle" vertical>
         <div>
-            <p>Product Categories</p>
+            <p className='font-bold text-xs md:text-base'>Product Categories</p>
         </div>
         <Flex align="center" gap="middle">
             <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>

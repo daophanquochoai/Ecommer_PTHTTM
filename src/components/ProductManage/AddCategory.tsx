@@ -1,11 +1,22 @@
 import React  from 'react';
 import {Select} from "antd";
+import BreadCrumb from "../Body/BreadCrumb.tsx";
+import {NavLink} from "react-router-dom";
+
+const bread = [
+    {
+        title : <NavLink to={'/admin/products'}>Products</NavLink>
+    },
+    {
+        title : <span className={'text-red-500'}>Add category</span>
+    }
+]
 
 const AddCategory: React.FC = () => {
     
     return (
         <div>
-            <p className='text-left text-2xl font-bold mb-4'>Add category</p>
+            <BreadCrumb bread={bread} />
             <form className='grid grid-cols-1 gap-9'>
                 <div className='flex flex-col md:flex-row gap-9'>
                     <div className='flex-1'>

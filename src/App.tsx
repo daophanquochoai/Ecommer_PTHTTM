@@ -16,6 +16,11 @@ import OverView from "./components/DashBoard/OverView.tsx";
 import Chat from "./components/DashBoard/Chat.tsx";
 import Manger from "./pages/Manger.tsx";
 import Settings from "./pages/Settings.tsx";
+import ListSetting from "./components/Settings/ListSetting.tsx";
+import AboutWeb from "./components/Settings/AboutWeb.tsx";
+import ContactInfo from "./components/Settings/ContactInfo.tsx";
+import TimeLanguage from "./components/Settings/TimeLanguage.tsx";
+import Payment from "./components/Settings/Payment.tsx";
 import ProductManage from "./pages/ProductManage.tsx";
 import ProductAdmin from "./components/ProductManage/ProductAdmin.tsx"
 import AddProduct from "./components/ProductManage/AddProduct.tsx";
@@ -84,7 +89,29 @@ export const routers = [
             },
             {
                 path: 'settings',
-                element: <Settings />
+                element: <Settings />,
+                children: [
+                    {
+                        index : true,
+                        element: <ListSetting />
+                    },
+                    {
+                        path: 'about-web',
+                        element: <AboutWeb />
+                    },
+                    {
+                        path: 'contact-info',
+                        element: <ContactInfo />
+                    },
+                    {
+                        path: 'time-language',
+                        element: <TimeLanguage />
+                    },
+                    {
+                        path: 'payment',
+                        element: <Payment />
+                    }
+                ]
             },
             {
                 path: 'products',
