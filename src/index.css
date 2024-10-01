@@ -107,3 +107,14 @@ a.active  {
 .ant-upload-list .ant-upload-list-picture{
     @apply flex
 }
+/*  loading */
+.ant-spin-text{
+    color: rgba(239,68,68, 0.88) !important;
+    font-size: 24px !important;
+}
+.ant-spin-dot-item{
+    background: rgba(239,68,68, 0.3) !important;
+}
+:where(.css-dev-only-do-not-override-5wsri9).ant-spin-fullscreen {
+    background: white !important;
+}

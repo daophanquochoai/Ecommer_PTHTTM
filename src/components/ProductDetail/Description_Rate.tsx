@@ -4,6 +4,7 @@ import {Button, Form, Rate, Upload} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from '@ant-design/icons';
 import RelateProduct from "./RelateProduct.tsx";
+import Skeleton from "react-loading-skeleton";
 type Props = {
     sale : number,
     image : string,
@@ -18,7 +19,8 @@ type Props = {
     comments : object
 }
 const DescriptionRate : React.FC = ( props : Props) => {
-    const [active, setActive] = useState<boolean>(true)
+    const [active, setActive] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const normFile = (e: any) => {
         if (Array.isArray(e)) {
@@ -45,9 +47,18 @@ const DescriptionRate : React.FC = ( props : Props) => {
                         {
                             active ?
                                 <>
-                                    <div className={'p-4 text-gray-400'}>
-                                        <p>{props.description}</p>
-                                    </div>
+                                    {
+                                        isLoading ?
+                                            <>
+                                                <div className={'p-4'}></div>
+                                                <Skeleton className={'w-full h-[20px]'} count={5}/>
+                                                <div className={'p-4'}></div>
+                                            </>
+                                            :
+                                            <div className={'p-4 text-gray-400'}>
+                                                <p>{props.description}</p>
+                                            </div>
+                                    }
                                 </> :
                                 <>
                                     <div className={'grid grid-cols-2'}>

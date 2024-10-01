@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Skeleton from "react-loading-skeleton";
 
 const ListCategory : React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     return (
         <div className={'bg-white p-4'}>
             <div className={'flex flex-col'}>
@@ -8,7 +11,12 @@ const ListCategory : React.FC = () => {
                     <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Product categories</span>
                 </div>
                 <ul className={'flex flex-col gap-4 mt-5 max-h-[500px] overflow-y-scroll'}>
-                    <li className={'text-[14px] md:text-xl text-gray-400 cursor-pointer hover:text-red-500'}>Babies & Moms</li>
+                    {
+                        isLoading ?
+                            <Skeleton className={'h-[30px]'}/>
+                            :
+                            <li className={'text-[14px] md:text-xl text-gray-400 cursor-pointer hover:text-red-500'}>Babies & Moms</li>
+                    }
                 </ul>
             </div>
         </div>

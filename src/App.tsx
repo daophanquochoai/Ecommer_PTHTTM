@@ -27,6 +27,9 @@ import AddProduct from "./components/ProductManage/AddProduct.tsx";
 import EditProduct from "./components/ProductManage/EditProduct.tsx";
 import AddCategory from "./components/ProductManage/AddCategory.tsx";
 import EditCategory from "./components/ProductManage/EditCategory.tsx";
+import {Spin} from "antd";
+import {useEffect, useState} from "react";
+import ProductDetail from "./pages/ProductDetail.tsx";
 
 export const routers = [
     {
@@ -40,6 +43,10 @@ export const routers = [
             {
                 path: '/category',
                 element: <ProductPage />
+            },
+            {
+                path: '/category/:id',
+                element: <ProductDetail />
             },
             {
                 path: '/blogs',
@@ -145,11 +152,26 @@ export const routers = [
 
 const App : React.FC = ()  => {
     const element = useRoutes(routers);
-
+    const [isLoading, setIsLoading]  = useState<boolean>(true);
+    useEffect( () => {
+        window.addEventListener('load',() => setIsLoading(false))
+    })
   return (
       <>
           <ToastContainer autoClose={4000}/>
-          {element}
+          {
+              isLoading ?
+                  <>
+                      <div className={'bg-white'}>
+                          <Spin tip="Loading..." size="large" fullscreen={true} style={{background : 'white'}}>
+                          </Spin>
+                      </div>
+                  </>
+                  :
+                  <>
+                    {element}
+                  </>
+          }
       </>
   )
 }

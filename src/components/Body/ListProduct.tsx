@@ -1,6 +1,4 @@
 import {FaCaretSquareLeft, FaCaretSquareRight, FaChevronRight, FaStar} from "react-icons/fa";
-import {FaRegStarHalfStroke} from "react-icons/fa6";
-import {CiHeart, CiSearch, CiShoppingCart, CiStar} from "react-icons/ci";
 import Product from "./Product.tsx";
 type Props = {
     title : string
