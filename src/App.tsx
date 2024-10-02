@@ -31,6 +31,7 @@ import {Spin} from "antd";
 import {useEffect, useState} from "react";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import MyOrder from "./pages/MyOrder.tsx";
+import Service from "./pages/Service.tsx";
 
 export const routers = [
     {
@@ -152,6 +153,10 @@ export const routers = [
                 ]
             }
         ]
+    },
+    {
+        path: '/service',
+        element: <Service />
     }
 ];
 
