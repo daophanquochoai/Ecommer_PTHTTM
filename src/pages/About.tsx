@@ -21,7 +21,7 @@ const About = () => {
 
     return (
         <>
-        <div className={'mt-3 mb-[190px]'}>
+        <div className={'mt-3'}>
             <div className={'mx-[5%]'}>
                 <BreadCrumb bread={bread}/>
                 <Poster />

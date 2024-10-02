@@ -16,7 +16,7 @@ type Props = {
     selled : number
 }
 const Product : React.FC = ( props : Props ) => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate()
 
     return (

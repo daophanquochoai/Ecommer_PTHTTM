@@ -30,6 +30,7 @@ import EditCategory from "./components/ProductManage/EditCategory.tsx";
 import {Spin} from "antd";
 import {useEffect, useState} from "react";
 import ProductDetail from "./pages/ProductDetail.tsx";
+import MyOrder from "./pages/MyOrder.tsx";
 
 export const routers = [
     {
@@ -75,6 +76,10 @@ export const routers = [
             {
                 path: '/register',
                 element: <RegisterPage />
+            },
+            {
+                path: '/myorder',
+                element: <MyOrder />
             }
         ]
     },

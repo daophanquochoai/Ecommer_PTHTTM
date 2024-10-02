@@ -10,7 +10,7 @@ const OurTeam : React.FC = () => {
                     <h2 className={'text-3xl font-bold'}>Our Team</h2>
                     <p className={'text-xl text-gray-400 text-center'}>Lorem Ipsum to using making it look like readable English.</p>
                 </div>
-                <div className={'grid grid-rows-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pt-4'}>
+                <div className={'grid sm:grid-cols-3 md:grid-cols-5 gap-6 pt-4'}>
                     <AvatarTeam />
                     <AvatarTeam />
                     <AvatarTeam />

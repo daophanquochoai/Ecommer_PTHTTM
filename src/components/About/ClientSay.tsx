@@ -2,8 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Swiper, SwiperSlide} from "swiper/react";
 import { FreeMode, Pagination } from 'swiper/modules';
 import {Avatar, Rate} from "antd";
+import Skeleton from "react-loading-skeleton";
+import Say from "./Say.tsx";
 
 const ClientSay : React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [silde, setSlide] = useState<number>(3);
 
     const handleResize = () => {
@@ -46,72 +49,13 @@ const ClientSay : React.FC = () => {
                 }
             >
                 <SwiperSlide>
-                    <div className={'p-4 bg-primary'}>
-                        <div className={'flex gap-2 items-center'}>
-                            <div className={'p-2'}><Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1"
-                                                           size={{ xs: 24, sm: 32, xl: 65 }}
-                            /></div>
-                            <div>
-                                <h6 className={'font-bold text-base'}>Quốc Hoài</h6>
-                                <p className={'text-gray-400'}>Developer</p>
-                                <Rate disabled defaultValue={4} />
-                            </div>
-                        </div>
-                        <div>
-                            <p className={'p-2 px-4 text-base font-[700] shortcut text-gray-400'}>Very Good</p>
-                        </div>
-                    </div>
+                    <Say />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className={'p-4 bg-primary'}>
-                        <div className={'flex gap-2 items-center'}>
-                            <div className={'p-2'}><Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1"
-                                                           size={{ xs: 24, sm: 32, xl: 65 }}
-                            /></div>
-                            <div>
-                                <h6 className={'font-bold text-base'}>Quốc Hoài</h6>
-                                <p className={'text-gray-400'}>Developer</p>
-                                <Rate disabled defaultValue={4} />
-                            </div>
-                        </div>
-                        <div>
-                            <p className={'p-2 px-4 text-base font-[700] shortcut text-gray-400'}>Very Good</p>
-                        </div>
-                    </div>
+                    <Say />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className={'p-4 bg-primary'}>
-                        <div className={'flex gap-2 items-center'}>
-                            <div className={'p-2'}><Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1"
-                                                           size={{ xs: 24, sm: 32, xl: 65 }}
-                            /></div>
-                            <div>
-                                <h6 className={'font-bold text-base'}>Quốc Hoài</h6>
-                                <p className={'text-gray-400'}>Developer</p>
-                                <Rate disabled defaultValue={4} />
-                            </div>
-                        </div>
-                        <div>
-                            <p className={'p-2 px-4 text-base font-[700] shortcut text-gray-400'}>Very Good</p>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className={'p-4 bg-primary'}>
-                        <div className={'flex gap-2 items-center'}>
-                            <div className={'p-2'}><Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1"
-                                                           size={{ xs: 24, sm: 32, xl: 65 }}
-                            /></div>
-                            <div>
-                                <h6 className={'font-bold text-base'}>Quốc Hoài</h6>
-                                <p className={'text-gray-400'}>Developer</p>
-                                <Rate disabled defaultValue={4} />
-                            </div>
-                        </div>
-                        <div>
-                            <p className={'p-2 px-4 text-base font-[700] shortcut text-gray-400'}>Very Good</p>
-                        </div>
-                    </div>
+                    <Say />
                 </SwiperSlide>
             </Swiper>
         </div>

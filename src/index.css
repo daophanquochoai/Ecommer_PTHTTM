@@ -118,3 +118,14 @@ a.active  {
 :where(.css-dev-only-do-not-override-5wsri9).ant-spin-fullscreen {
     background: white !important;
 }
+
+/* process order */
+:where(.css-dev-only-do-not-override-5wsri9).ant-steps .ant-steps-item-process .ant-steps-item-icon >.ant-steps-icon .ant-steps-icon-dot{
+    background: rgba(239,68,68) !important;
+}
+:where(.css-dev-only-do-not-override-5wsri9).ant-steps .ant-steps-item-finish .ant-steps-item-icon >.ant-steps-icon .ant-steps-icon-dot{
+    background: rgba(239,68,68) !important;
+}
+:where(.css-dev-only-do-not-override-5wsri9).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-tail::after {
+    background: rgba(239,68,68) !important;
+}

@@ -44,14 +44,14 @@ const Blogs : React.FC = () => {
                 </div>
                 <div className={'flex flex-col gap-4'}>
                     <div className={'p-4 bg-white'}>
-                        <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Product categories</span>
+                        <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Search</span>
                         <input className={'mt-6 outline-0 p-2 border w-full'} placeholder={'Search'}/>
                     </div>
                     <div>
                         <ListCategory />
                     </div>
                     <div className={'p-4 bg-white'}>
-                        <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Product categories</span>
+                        <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Recent Post</span>
                         <div className={'mt-6 grid gap-3 max-h-[400px] overflow-y-scroll'}>
                             <SubBlogItem />
                             <SubBlogItem />

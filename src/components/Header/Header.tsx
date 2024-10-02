@@ -1,5 +1,5 @@
 import {BiSupport} from "react-icons/bi";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {AppContext} from "../../context/AppContext.tsx";
 import {MdOutlineExpandMore} from "react-icons/md";
 import {Link} from "react-router-dom";
@@ -11,7 +11,6 @@ import Slider from "./Slider.tsx";
 const Header = () => {
 
     const {isLogin } =  useContext(AppContext);
-    console.log(isLogin);
     return (
         <div>
             {/*  first */}
