@@ -33,6 +33,10 @@ import {useEffect, useState} from "react";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import MyOrder from "./pages/MyOrder.tsx";
 import Service from "./pages/Service.tsx";
+import PolicyTerm from "./components/Service/GeneralInfo/PolicyTerm.tsx";
+import SafeShopping from "./components/Service/GeneralInfo/SafeShopping.tsx";
+import Order from "./components/Service/OrderDelivery/Order.tsx";
+import Delivery from "./components/Service/OrderDelivery/Delivery.tsx";
 import Users from "./pages/Users.tsx";
 import UserList from "./components/Users/UserList.tsx";
 import Customer from "./components/Users/Customer.tsx";
@@ -208,7 +212,25 @@ export const routers = [
     },
     {
         path: '/service',
-        element: <Service />
+        element: <Service />,
+        children: [
+            {
+                path: 'policy-term',
+                element: <PolicyTerm />
+            },
+            {
+                path: 'safe-shopping',
+                element: <SafeShopping />
+            },
+            {
+                path: 'order',
+                element: <Order />
+            },
+            {
+                path: 'delivery',
+                element: <Delivery />
+            },
+        ]
     }
 ];
 
@@ -217,25 +239,25 @@ const App : React.FC = ()  => {
     const [isLoading, setIsLoading]  = useState<boolean>(true);
     useEffect( () => {
         window.addEventListener('load',() => setIsLoading(false))
-    })
-  return (
-      <>
-          <ToastContainer autoClose={4000}/>
-          {
-              isLoading ?
-                  <>
-                      <div className={'bg-white'}>
-                          <Spin tip="Loading..." size="large" fullscreen={true} style={{background : 'white'}}>
-                          </Spin>
-                      </div>
-                  </>
-                  :
-                  <>
-                    {element}
-                  </>
-          }
-      </>
-  )
-}
+    });
+    return (
+        <>
+            <ToastContainer autoClose={4000}/>
+            {
+                isLoading ?
+                    <>
+                        <div className={'bg-white'}>
+                            <Spin tip="Loading..." size="large" fullscreen={true} style={{background : 'white'}}>
+                            </Spin>
+                        </div>
+                    </>
+                    :
+                    <>
+                        {element}
+                    </>
+            }
+        </>
+    );
+};
 
-export default App
+export default App;

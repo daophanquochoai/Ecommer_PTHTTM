@@ -3,10 +3,14 @@ import SiderBar from "../components/DashBoard/SiderBar.tsx";
 import {TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarRightCollapseFilled} from "react-icons/tb";
 import {MdOutlineExpandMore} from "react-icons/md";
 import {Outlet} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import RightModal from '../components/Header/RightModal.tsx';
+
 type Props = {
     collapsed : boolean,
 }
 const DashBoard : React.FC = () => {
+    const [openAccount, setOpenAccount] = useState<boolean>(false)
     const [collapsed, setCollapsed] = useState(false);
     const props : Props = {
         collapsed : collapsed
@@ -34,9 +38,10 @@ const DashBoard : React.FC = () => {
                                     <MdOutlineExpandMore />
                                     <div className='group-hover:block hidden absolute z-[9] dropdown-menu right-0 pt-4'>
                                         <div className='flex flex-col gap-2 w-44 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
-                                            <p className='cursor-pointer hover:text-black'>My Account</p>
-                                            <p className='cursor-pointer hover:text-black'>My Order</p>
-                                            <p className='cursor-pointer hover:text-black'>Logout</p>
+                                            <p className='cursor-pointer hover:text-black' onClick={() => setOpenAccount(true)}>My Account</p>
+                                            <NavLink to={'/login'}>
+                                                <p className='cursor-pointer hover:text-black'>Logout</p>
+                                            </NavLink>
                                         </div>
                                     </div>
                                 </div>
@@ -48,6 +53,7 @@ const DashBoard : React.FC = () => {
                     </div>
                 </div>
             </div>
+            <RightModal openAccount={openAccount} setOpenAccount = {setOpenAccount}/>
         </div>
     )
 };
