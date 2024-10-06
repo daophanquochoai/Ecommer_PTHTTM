@@ -19,7 +19,7 @@ const ProductDetail : React.FC = () => {
             title : <NavLink to={'/'}>HOME</NavLink>
         },
         {
-            title : <NavLink to={'/product'}>PRODUCT</NavLink>
+            title : <NavLink to={'/category'}>PRODUCT</NavLink>
         },
         {
             title : <span className={'text-red-500'}>Hair Remover Shaver with Extra Replacement Head (Blue)</span>

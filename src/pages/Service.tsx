@@ -2,6 +2,7 @@ import React from 'react';
 import {FaSearch} from "react-icons/fa";
 import {Collapse, CollapseProps, Divider} from "antd";
 import {IoCall} from "react-icons/io5";
+import {NavLink} from "react-router-dom";
 
 const items: CollapseProps['items'] = [
     {
@@ -27,9 +28,9 @@ const Service : React.FC = () => {
     return (
         <div>
             <div className={'flex px-[5%] bg-red-500 p-4 justify-between items-center'}>
-                <div>
+                <NavLink to={'/'}>
                     <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2022/03/logo.png'} alt={'logo'}/>
-                </div>
+                </NavLink>
                 <div>
                     <p className={'text-white text-xs md:text-base'}>Trung tâm trợ giúp Mekog VN</p>
                 </div>
