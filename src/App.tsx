@@ -85,10 +85,6 @@ export const routers = [
                 element: <WishListPage />
             },
             {
-                path: '/register',
-                element: <RegisterPage />
-            },
-            {
                 path: '/forget',
                 element: <ForgetPage />
             },
@@ -101,6 +97,10 @@ export const routers = [
     {
         path: '/login',
         element: <LoginPage />
+    },
+    {
+        path: '/register',
+        element: <RegisterPage />
     },
     {
         path: '/admin',
