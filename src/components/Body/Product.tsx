@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {CiHeart, CiSearch} from "react-icons/ci";
 import {Rate} from "antd";
 import {useNavigate} from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
