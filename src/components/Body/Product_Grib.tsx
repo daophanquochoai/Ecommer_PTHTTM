@@ -1,7 +1,10 @@
 import React from 'react';
-import {CiHeart, CiSearch, CiShoppingCart} from "react-icons/ci";
 import {Rate} from "antd";
 import {useNavigate} from "react-router-dom";
+import AddCart from './AddCart.tsx';
+import AddWishlist from './AddWishlist.tsx';
+import QuickView from './QuickView.tsx';
+
 type Props = {
     sale : number,
     image : string,
@@ -22,9 +25,9 @@ const ProductGrib = ( props : Props ) => {
                     <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>{props.sale}%</span>
                     <img src={props.image} className={'w-full h-full object-center'} alt={''}/>
                     <div className={'flex flex-col absolute h-full bg-white right-[-68px] top-0 p-3 items-center justify-center gap-3 group-hover:right-0 transition-all duration-300'}>
-                        <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                        <CiHeart className={`text-2xl ${props.like ? 'text-red-500' : ''} hover:text-red-500 cursor-pointer`} />
-                        <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
+                        <AddCart />
+                        <AddWishlist />
+                        <QuickView {...props} />
                     </div>
                 </div>
                 <div onClick={()=>{
