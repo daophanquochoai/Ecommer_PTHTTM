@@ -11,6 +11,7 @@ import Cart from "./pages/Cart.tsx";
 import WishListPage from "./pages/WishListPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import ForgetPage from "./pages/ForgetPage.tsx";
 import DashBoard from "./pages/DashBoard.tsx";
 import OverView from "./components/DashBoard/OverView.tsx";
 import Chat from "./components/DashBoard/Chat.tsx";
@@ -32,6 +33,19 @@ import {useEffect, useState} from "react";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import MyOrder from "./pages/MyOrder.tsx";
 import Service from "./pages/Service.tsx";
+import PolicyTerm from "./components/Service/GeneralInfo/PolicyTerm.tsx";
+import SafeShopping from "./components/Service/GeneralInfo/SafeShopping.tsx";
+import Order from "./components/Service/OrderDelivery/Order.tsx";
+import Delivery from "./components/Service/OrderDelivery/Delivery.tsx";
+import Users from "./pages/Users.tsx";
+import UserList from "./components/Users/UserList.tsx";
+import Customer from "./components/Users/Customer.tsx";
+import CustomerDetail from "./components/Users/CustomerDetail.tsx";
+import Staff from "./components/Users/Staff.tsx";
+import StaffDetail from "./components/Users/StaffDetail.tsx";
+import AddStaff from "./components/Users/AddStaff.tsx";
+import AddRole from "./components/Users/AddRole.tsx";
+import EditRole from "./components/Users/EditRole.tsx";
 
 export const routers = [
     {
@@ -73,6 +87,10 @@ export const routers = [
             {
                 path: '/register',
                 element: <RegisterPage />
+            },
+            {
+                path: '/forget',
+                element: <ForgetPage />
             },
             {
                 path: '/myorder',
@@ -151,12 +169,68 @@ export const routers = [
                         element: <EditCategory />
                     }
                 ]
+            },
+            {
+                path: 'users',
+                element: <Users />,
+                children: [
+                    {
+                        index : true,
+                        element: <UserList />
+                    },
+                    {
+                        path: 'customer',
+                        element: <Customer />
+                    },
+                    {
+                        path: 'customer/detail',
+                        element: <CustomerDetail />
+                    },
+                    {
+                        path: 'staff',
+                        element: <Staff />
+                    },
+                    {
+                        path: 'staff/detail',
+                        element: <StaffDetail />
+                    },
+                    {
+                        path: 'staff/add-staff',
+                        element: <AddStaff />
+                    },
+                    {
+                        path: 'staff/add-role',
+                        element: <AddRole />
+                    },
+                    {
+                        path: 'staff/edit-role',
+                        element: <EditRole />
+                    }
+                ]
             }
         ]
     },
     {
         path: '/service',
-        element: <Service />
+        element: <Service />,
+        children: [
+            {
+                path: 'policy-term',
+                element: <PolicyTerm />
+            },
+            {
+                path: 'safe-shopping',
+                element: <SafeShopping />
+            },
+            {
+                path: 'order',
+                element: <Order />
+            },
+            {
+                path: 'delivery',
+                element: <Delivery />
+            },
+        ]
     }
 ];
 
@@ -165,25 +239,25 @@ const App : React.FC = ()  => {
     const [isLoading, setIsLoading]  = useState<boolean>(true);
     useEffect( () => {
         window.addEventListener('load',() => setIsLoading(false))
-    })
-  return (
-      <>
-          <ToastContainer autoClose={4000}/>
-          {
-              isLoading ?
-                  <>
-                      <div className={'bg-white'}>
-                          <Spin tip="Loading..." size="large" fullscreen={true} style={{background : 'white'}}>
-                          </Spin>
-                      </div>
-                  </>
-                  :
-                  <>
-                    {element}
-                  </>
-          }
-      </>
-  )
-}
+    });
+    return (
+        <>
+            <ToastContainer autoClose={4000}/>
+            {
+                isLoading ?
+                    <>
+                        <div className={'bg-white'}>
+                            <Spin tip="Loading..." size="large" fullscreen={true} style={{background : 'white'}}>
+                            </Spin>
+                        </div>
+                    </>
+                    :
+                    <>
+                        {element}
+                    </>
+            }
+        </>
+    );
+};
 
-export default App
+export default App;

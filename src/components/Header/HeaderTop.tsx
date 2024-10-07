@@ -1,5 +1,5 @@
 import {BiSupport} from "react-icons/bi";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {MdOutlineExpandMore} from "react-icons/md";
 import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {AppContext} from "../../context/AppContext.tsx";
@@ -8,7 +8,6 @@ import {Cascader, CascaderProps, Spin, Upload, UploadFile, UploadProps} from "an
 import {getDataCity} from "../../Utils/GetAddress.ts";
 import RightModal from "./RightModal.tsx";
 import CartModel from "./CartModel.tsx";
-
 
 const HeaderTop : React.FC = () => {
     // state
@@ -26,7 +25,7 @@ const HeaderTop : React.FC = () => {
                 <p className={'ml-3 text-gray-500 text-sm'}>Email : dpquochoai@gmail.com</p>
             </div>
             <div className={'flex items-center gap-4'}>
-                <div className={'flex items-center gap-2 text-red-500 font-bold cursor-pointer'} onClick={()=> navigation('/service')}><BiSupport/> Support</div>
+                <NavLink to={'/service'} className={'flex items-center gap-2 text-red-500 font-bold cursor-pointer'}><BiSupport/> Support</NavLink>
                 <div>{ !isLogin ? <p className={'text-red-500 cursor-pointer'} onClick={() => navigation('/login')}>Đăng nhập / Đăng ký</p> :
                     (
                         <div className={'flex items-center group'}>

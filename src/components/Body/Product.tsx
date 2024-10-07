@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import {CiHeart, CiSearch, CiShoppingCart, CiStar} from "react-icons/ci";
+import {CiHeart, CiSearch} from "react-icons/ci";
 import {Rate} from "antd";
 import {useNavigate} from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import AddCart from './AddCart.tsx';
+import AddWishlist from './AddWishlist.tsx';
+import QuickView from './QuickView.tsx';
 
 type Props = {
     sale : number,
@@ -32,9 +35,9 @@ const Product : React.FC = ( props : Props ) => {
                 {
                     !isLoading && <>
                         <div className={'flex gap-4 justify-center items-center absolute bottom-[-60px] w-full bg-white p-2 group-hover:bottom-0 transition-all duration-300'}>
-                            <CiShoppingCart className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
-                            <CiHeart className={`text-2xl ${props.like ? 'text-red-500' : ''} hover:text-red-500 cursor-pointer`} />
-                            <CiSearch className={'text-2xl hover:text-red-500 cursor-pointer'} />
+                            <AddCart />
+                            <AddWishlist />
+                            <QuickView {...props} />
                         </div>
                     </>
                 }
