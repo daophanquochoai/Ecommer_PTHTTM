@@ -2,6 +2,7 @@ import React from 'react';
 import {FaSearch} from "react-icons/fa";
 import {Collapse, CollapseProps, Divider} from "antd";
 import {IoCall} from "react-icons/io5";
+import {useNavigate} from "react-router-dom";
 
 const items: CollapseProps['items'] = [
     {
@@ -24,11 +25,12 @@ const items: CollapseProps['items'] = [
 
 
 const Service : React.FC = () => {
+    const navigate = useNavigate();
     return (
         <div>
             <div className={'flex px-[5%] bg-red-500 p-4 justify-between items-center'}>
-                <div>
-                    <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2022/03/logo.png'} alt={'logo'}/>
+                <div className={'cursor-pointer'}>
+                    <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2022/03/logo.png'} alt={'logo'} onClick={()=>navigate('/')}/>
                 </div>
                 <div>
                     <p className={'text-white text-xs md:text-base'}>Trung tâm trợ giúp Mekog VN</p>

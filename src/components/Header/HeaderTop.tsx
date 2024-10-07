@@ -26,7 +26,7 @@ const HeaderTop : React.FC = () => {
                 <p className={'ml-3 text-gray-500 text-sm'}>Email : dpquochoai@gmail.com</p>
             </div>
             <div className={'flex items-center gap-4'}>
-                <div className={'flex items-center gap-2 text-red-500 font-bold cursor-pointer'}><BiSupport/> Support</div>
+                <div className={'flex items-center gap-2 text-red-500 font-bold cursor-pointer'} onClick={()=> navigation('/service')}><BiSupport/> Support</div>
                 <div>{ !isLogin ? <p className={'text-red-500 cursor-pointer'} onClick={() => navigation('/login')}>Đăng nhập / Đăng ký</p> :
                     (
                         <div className={'flex items-center group'}>
