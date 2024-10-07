@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ListCategory from "./ListCategory.tsx";
 import Price from "./Price.tsx";
 import Star from "./Star.tsx";
@@ -7,6 +7,7 @@ import {FaFilter} from "react-icons/fa";
 
 const ListProduct : React.FC = () => {
     const  [filter, setFilter] = useState<boolean>(false);
+
     return (
         <div className={'mt-8'}>
             <div className={'grid grid-cols-1 md:grid-cols-[1fr_2fr] lg:grid-cols-[1fr_3fr]'}>

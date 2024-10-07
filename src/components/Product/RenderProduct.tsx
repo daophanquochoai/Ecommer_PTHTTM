@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { RxViewGrid } from "react-icons/rx";
 import { CiViewTimeline } from "react-icons/ci";
 import Product from "../Body/Product.tsx";
@@ -6,6 +6,7 @@ import { Pagination } from 'antd';
 import type { PaginationProps } from 'antd';
 import {Select} from "antd";
 import Product_Grib from "../Body/Product_Grib.tsx";
+import {getProduct} from "../../Utils/Helper.tsx";
 
 const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
     console.log(current, pageSize);
@@ -14,8 +15,34 @@ const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize
 const RenderProduct: React.FC = () => {
 
     const [filter , setFilter] = useState<string>('Relate');
-    const [page, setPage] = useState<number>(1)
-    const [grib, setGrib] = useState<boolean>(true)
+    const [page, setPage] = useState<number>(1);
+    const [grib, setGrib] = useState<boolean>(true);
+    const [dataProduct, setDataProduct] = useState<object[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const data = await getProduct();
+            const dataItem:object[] = [];
+            console.log(data)
+            data.data.forEach( product=> {
+                dataItem.push({
+                    sale : 20,
+                    image : product.image_url,
+                    like : false,
+                    title : product.product_title,
+                    star : 4,
+                    price : product.price_unit,
+                    priceOld : 120,
+                    selled : 8,
+                    productId: product.category_id
+                })
+            })
+            setDataProduct(dataItem);
+            setIsLoading(false)
+        }
+        fetchProduct()
+    }, []);
     const filterHandler = (e) => {
         setFilter(e)
     }
@@ -60,20 +87,33 @@ const RenderProduct: React.FC = () => {
                 <div className={`grid ${grib ? 'sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1'} p-4 gap-4`}>
                     {
                         grib ?
-                                <>
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                    <Product {...Props} />
-                                </>
+                            <>
+                                {
+                                    isLoading ?
+                                        <>
+                                            <Product isLoading={true}/>
+                                            <Product isLoading={true}/>
+                                            <Product isLoading={true}/>
+                                            <Product isLoading={true}/>
+                                            <Product isLoading={true}/>
+                                        </>
+                                        :
+                                        <>
+                                            {
+                                                dataProduct.map( (product, index) =>
+                                                    <Product sale={product.sale}
+                                                             image={product.image}
+                                                             like={product.like}
+                                                             title={product.title}
+                                                             star={product.star}
+                                                             price={product.price}
+                                                             priceOld={product.priceOld}
+                                                             selled={product.selled}/>
+                                                )
+                                            }
+                                        </>
+                                }
+                            </>
                             :
                             <>
                                 <Product_Grib {...Props}/>
