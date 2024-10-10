@@ -14,10 +14,11 @@ const Search = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const {categoryChoose, setCategoryChoose, categoryList, setCategoryList}  = useContext(AppContext)
     const {search, setSearch} = useContext(AppContext);
+    const [searchKey, setSearchKey] = useState<string>("");
     const navigate = useNavigate();
 
     const handleSearch = () => {
-        setSearch('');
+        setSearch(searchKey);
         navigate('/category')
     }
 
@@ -89,7 +90,7 @@ const Search = () => {
                 <div className={'flex items-center bg-white p-1 md:p-2 justify-between'}>
                     <div className={'flex gap-2 items-center w-full'}>
                         <IoSearchSharp className={'text-red-500 text-xl'}/>
-                        <input className={'flex-1 md:p-2 outline-0 p-1'} value={search} onChange={ (e) => setSearch(e.target.value)}/>
+                        <input className={'flex-1 md:p-2 outline-0 p-1'} value={searchKey} onChange={ (e) => setSearchKey(e.target.value)}/>
                     </div>
                     <button className={'text-sm w-1/5 bg-red-500 text-white md:text-base p-1 md:py-2'} onClick={() => handleSearch()}>Search</button>
                 </div>

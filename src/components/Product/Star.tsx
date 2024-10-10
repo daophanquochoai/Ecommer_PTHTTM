@@ -5,8 +5,9 @@ import {AppContext} from "../../context/AppContext.tsx";
 
 const Star : React.FC = () => {
 
-    const { rate, setRate} = useContext(AppContext);
+    const { rate, setRate, setPage} = useContext(AppContext);
     const checkBoxHandler = (e) => {
+        setPage(0)
         setRate(e.target.value)
     }
     return (

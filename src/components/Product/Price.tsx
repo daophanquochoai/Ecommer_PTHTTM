@@ -4,13 +4,21 @@ import {AppContext} from "../../context/AppContext.tsx";
 import {getRangePrice} from "../../Utils/Helper.tsx";
 import Skeleton from "react-loading-skeleton";
 const Price : React.FC = () => {
-    const {price, setPrice} = useContext(AppContext);
+    const {price, setPrice, setPage} = useContext(AppContext);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const handleTrans = (e) => {
+       setPrice(e)
+        setPage(0)
+    }
 
     useEffect(() => {
         const fetchRangePrice = async () =>{
             const data = await getRangePrice();
+            setPrice([data.fromPrice, data.toPrice]);
+            setIsLoading(false)
         }
+        fetchRangePrice()
     }, []);
     return (
         <div className={'bg-white mt-6 p-4'}>
@@ -25,7 +33,8 @@ const Price : React.FC = () => {
                         </>
                         :
                         <>
-                            <Slider range={{ draggableTrack: true }} max={1000} defaultValue={price} onChange={(e) => setPrice(e)}
+                            <Slider range={{ draggableTrack: true }} max={price[1]}
+                                    defaultValue={price}
                                     trackStyle={{ backgroundColor: "#ef4444" }}
                                     handleStyle={{ boxShadow: "#ef4444" }}
                             />
@@ -39,7 +48,7 @@ const Price : React.FC = () => {
                     </>
                     :
                     <>
-                        <p className={'text-[14px]'}>Price : <span>${price[0]}</span> — <span>${price[1]}</span></p>
+                        <p className={'text-[14px]'}>Price : <span>{price[0].toLocaleString()}đ</span> — <span>{price[1].toLocaleString()}đ</span></p>
                     </>
             }
         </div>

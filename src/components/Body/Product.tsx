@@ -24,7 +24,7 @@ const Product : React.FC = ( props : Props ) => {
     return (
         <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
             <div className={'relative h-[50%]'}>
-                <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>{props.sale}%</span>
+                <span className={`absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm ${props.sale == 0 && 'hidden'}`}>{props.sale}%</span>
                 {
                     props.isLoading ?
                         <Skeleton className={'w-full h-[200px]'}/>
@@ -45,6 +45,7 @@ const Product : React.FC = ( props : Props ) => {
                 scrollTo(0,0);
                 {!props.isLoading && navigate(`/category/${[props.title]}`)}
             }} className={'p-2 z-10 relative bg-white'}>
+                <b>{props.star}</b>
                 <div>
                     {
                         props.isLoading ?
@@ -78,8 +79,8 @@ const Product : React.FC = ( props : Props ) => {
                             </>
                             :
                             <>
-                                <p className={'text-[11px] sm:text-base'}>${props.price}</p>
-                                <del className={'text-[11px] sm:text-base text-gray-400'}>${props.priceOld}</del>
+                                <p className={'text-[11px] sm:text-base'}>{props.price.toLocaleString()}đ</p>
+                                <del className={'text-[11px] sm:text-base text-gray-400'}>{props.priceOld.toLocaleString()}đ</del>
                             </>
                     }
                 </div>

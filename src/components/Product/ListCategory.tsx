@@ -7,11 +7,11 @@ import {AppContext} from "../../context/AppContext.tsx";
 const ListCategory : React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [category, setCategory] = useState< TreeDataNode[]>([]);
-    const {categoryChoose, setCategoryChoose, categoryList, setCategoryList} = useContext(AppContext);
+    const {categoryChoose, setCategoryChoose, categoryList, setCategoryList, setPage} = useContext(AppContext);
 
     const onSelect = (e) => {
+        setPage(0)
         setCategoryChoose(e);
-        console.log(categoryChoose)
     }
 
     const dip = (arr:object[], data : object[]) => {
@@ -33,7 +33,12 @@ const ListCategory : React.FC = () => {
 
     useEffect(() => {
         const createTreeCategory = ( data : object[]) => {
-            const treeCategory : TreeDataNode[] = []
+            const treeCategory : TreeDataNode[] = [
+                {
+                    title: <li className={'text-[14px] md:text-xl text-gray-400 cursor-pointer hover:text-red-500'}>ALL</li>,
+                    key : 0
+                }
+            ]
             dip(treeCategory, data)
             setCategory(treeCategory)
         }

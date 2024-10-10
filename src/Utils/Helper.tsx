@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {ENV} from "./Contanst.ts";
 import aboutWeb from "../components/Settings/AboutWeb.tsx";
 
-export const getProduct = async ( categoryChoose : number, rate : number, price:number[], search:string) => {
+export const getProduct = async (page: number, categoryChoose : number, rate : number, price:number[], search:string, filter : string) => {
     const text = []
     if( categoryChoose > 0 ){
         text.push('category_id=' +categoryChoose)
@@ -14,6 +14,23 @@ export const getProduct = async ( categoryChoose : number, rate : number, price:
     if( search !== ''){
         text.push('searchKey=' + search);
     }
+    if(filter == "product_title")
+    {
+        text.push('sortKey=product_title&sortValue=ASC')
+    }
+    else if(filter === "high")
+    {
+        text.push('sortKey=price_unit&sortValue=DESC')
+    }
+    else if(filter === "low")
+    {
+        text.push('sortKey=price_unit&sortValue=ASC')
+    }else if(filter === "star")
+    {
+        text.push('sortKey=star&sortValue=DESC')
+    }
+    text.push(`page=${page+1}`)
+    console.log(`${ENV.API_BASE}/products` + (text.length > 0 ? '?' + text.join('&') : ''))
     const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/products` + (text.length > 0 ? '?' + text.join('&') : ''));
     return await data.data;
 }
@@ -22,7 +39,15 @@ export const getCategory = async () => {
     return await data.data;
 }
 
-export const getRangePrice = async () => {}
+export const getRangePrice = async () => {
+    try {
+        const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/categories/get-price`);
+        return await data.data;
+    }
+    catch (e) {
+        return e
+    }
+}
 
 export const parseJwt = (token : string) => {
     if (!token) { return }
@@ -36,6 +61,34 @@ export const loginAccount = async ( username : string, password : string ) => {
         return await axios.post(`${ENV.API_BASE}/user/login`,{
             username : username,
             password : password
+        })
+    }catch (e){
+        return e;
+    }
+}
+
+export const registerAccount = async ( username : string, password : string, first_name: string, last_name: string, email: string, phone: string, image_url: string ) => {
+    try{
+        return await axios.post(`${ENV.API_BASE}/user/register`,{
+            username : username,
+            password : password,
+            first_name : first_name,
+            last_name : last_name,
+            email : email,
+            phone : phone,
+            image_url: image_url
+        })
+    }catch (e){
+        return e;
+    }
+}
+
+export const detailAccount = async () => {
+    try{
+        return await axios.get(`${ENV.API_BASE}/account`,{
+            headers:{
+                "Authorization":
+            }
         })
     }catch (e){
         return e;

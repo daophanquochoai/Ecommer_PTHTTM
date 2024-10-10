@@ -2,13 +2,25 @@ import React, {useState} from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import {
     Button,
-    Form, GetProp,
+    Form, FormProps, GetProp,
     Input, message,
-    Select,
+    Select, Spin,
     Upload, UploadProps,
 } from 'antd';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {loginAccount, registerAccount} from "../../Utils/Helper.tsx";
+
+
+type FieldType = {
+    firstName?: string;
+    lastName?:string;
+    phone?:string;
+    email?:string;
+    username?: string;
+    password?: string;
+};
+
 
 const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -39,7 +51,9 @@ const beforeUpload = (file: FileType) => {
 const Register : React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [imageUrl, setImageUrl] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [imageUrl, setImageUrl] = useState<string>('');
+    const navigation = useNavigate()
 
     const handleChange: UploadProps['onChange'] = (info) => {
         if (info.file.status === 'uploading') {
@@ -58,71 +72,105 @@ const Register : React.FC = () => {
         </button>
     );
 
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        setIsLoading(true);
+        if(values.username == undefined || values.password == undefined || values.firstName == undefined || values.lastName == undefined || values.email == undefined  || values.phone == undefined)
+        {
+            toast.error("All field required!")
+            setIsLoading(false)
+            return
+        }
+        const data = await registerAccount(values.username, values.password, values.firstName, values.lastName, values.email, values.phone, imageUrl);
+        console.log(data.data.code)
+        if( data.data.code != 200 ){
+            toast.error("Don't Authentication!!")
+            setIsLoading(false)
+        }else{
+            navigation('/login');
+        }
+    };
+
+    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+        toast.error("Field didn't filled!!")
+    };
+
     return (
-        <Form
-            layout="vertical"
-            style={{ maxWidth: 600 }}
-        >
-            <div className={'flex gap-2'}>
-                <Form.Item label="First name">
-                    <Input />
-                </Form.Item>
-                <Form.Item label="Last name">
-                    <Input />
-                </Form.Item>
-            </div>
-            <Form.Item 
-                name="username"
-                label="Username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-                <Input/>
-            </Form.Item>
-            <Form.Item 
-                name="email"
-                label="Email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-                <Input/>
-            </Form.Item>
-            <Form.Item
-                name="phone"
-                label="Phone Number"
-                rules={[{ required: true, message: 'Please input your phone number!' }]}
-            >
-                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item label="Avatar" valuePropName="fileList" getValueFromEvent={normFile}>
-                <Upload
-                    name="avatar"
-                    listType="picture-circle"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action={'http://localhost:8080/api/image'}
-                    beforeUpload={beforeUpload}
-                    onChange={handleChange}
-                >
-                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                </Upload>
-            </Form.Item>
-            <div className={'mb-4'}>
-                <div className={'text-gray-400'}>
-                    <NavLink to={'/login'} className={'hover:text-red-500'}>
-                        Đăng nhập tại đây
-                    </NavLink>
-                </div>
-                <div className={'text-gray-400'}>
-                    <NavLink to={'/forget'} className={'hover:text-red-500'}>
-                        Quên mật khẩu?
-                    </NavLink>
-                </div>
-            </div>
-            <Form.Item className={'flex items-center justify-center'}>
-                <Button type="primary" htmlType="submit" danger className={'min-w-[200px]'}>
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
+       <Spin spinning={isLoading} tip={"Registing..."}>
+           <Form
+               layout="vertical"
+               style={{ maxWidth: 600 }}
+               onFinish={onFinish}
+               onFinishFailed={onFinishFailed}
+
+           >
+               <div className={'flex gap-2'}>
+                   <Form.Item label="First name" name="firstName" required>
+                       <Input />
+                   </Form.Item>
+                   <Form.Item label="Last name" name="lastName" required>
+                       <Input />
+                   </Form.Item>
+               </div>
+               <Form.Item
+                   name="username"
+                   label="Username"
+                   rules={[{ required: true, message: 'Please input your username!' }]}
+               >
+                   <Input/>
+               </Form.Item>
+               <Form.Item
+                   name="password"
+                   label="Password"
+                   rules={[{ required: true, message: 'Please input your password!' }]}
+               >
+                   <Input/>
+               </Form.Item>
+               <Form.Item
+                   name="email"
+                   label="Email"
+                   rules={[{ required: true, message: 'Please input your email!' }]}
+               >
+                   <Input/>
+               </Form.Item>
+               <Form.Item
+                   name="phone"
+                   label="Phone Number"
+                   rules={[{ required: true, message: 'Please input your phone number!' }]}
+               >
+                   <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+               </Form.Item>
+               <Form.Item label="Avatar" valuePropName="fileList" getValueFromEvent={normFile}>
+                   <Upload
+                       name="image_url"
+                       listType="picture-circle"
+                       className="avatar-uploader"
+                       showUploadList={false}
+                       action={'http://localhost:3000/upload'}
+                       beforeUpload={beforeUpload}
+                       onChange={handleChange}
+                   >
+                       {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%', borderRadius: "50%" }} /> : uploadButton}
+                   </Upload>
+               </Form.Item>
+               <div className={'mb-4'}>
+                   <div className={'text-gray-400'}>
+                       <NavLink to={'/login'} className={'hover:text-red-500'}>
+                           Đăng nhập tại đây
+                       </NavLink>
+                   </div>
+                   <div className={'text-gray-400'}>
+                       <NavLink to={'/forget'} className={'hover:text-red-500'}>
+                           Quên mật khẩu?
+                       </NavLink>
+                   </div>
+               </div>
+               <Form.Item className={'flex items-center justify-center'}>
+                   <Button type="primary" htmlType="submit" danger className={'min-w-[200px]'}>
+                       Submit
+                   </Button>
+               </Form.Item>
+           </Form>
+       </Spin>
     );
 };
 

@@ -24,7 +24,7 @@ const ProductGrib : React.FC = ( props : Props ) => {
         <div className={'px-7'}>
             <div className={'border grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_3fr] hover:scale-105 transition-all duration-500 group cursor-pointer'}>
                 <div className={'relative'}>
-                    <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>{props.sale}%</span>
+                    <span className={`absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm ${props.sale === 0 && "hidden"}`}>{props.sale}%</span>
                     {
                         props.isLoading ?
                             <Skeleton className={'w-full h-[200px]'}/>
@@ -79,7 +79,7 @@ const ProductGrib : React.FC = ( props : Props ) => {
                                 </>
                                 :
                                 <>
-                                    <p className={'text-[11px] sm:text-base'}>${props.price}</p>
+                                    <p className={'text-[11px] sm:text-base'}>${props.price.toLocaleString()}</p>
                                     <del className={'text-[11px] sm:text-base text-gray-400'}>${props.priceOld}</del>
                                 </>
                         }

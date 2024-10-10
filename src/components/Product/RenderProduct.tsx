@@ -15,45 +15,46 @@ const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize
 
 const RenderProduct: React.FC = () => {
 
-    const [filter , setFilter] = useState<string>('Relate');
     const [grib, setGrib] = useState<boolean>(true);
     const [dataProduct, setDataProduct] = useState<object[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [pageTotal, setPageTotal] = useState<number>(0);
-    const {search, price, rate, categoryChoose, page, setPage} = useContext(AppContext);
+    const {search, price, rate, categoryChoose, page, setPage, filter, setFilter} = useContext(AppContext);
 
     useEffect(() => {
         setIsLoading(true);
         const fetchProduct = async () => {
-            const data = await getProduct(categoryChoose,rate, price, search);
+            const data = await getProduct(page,categoryChoose,rate, price, search, filter);
             const dataItem:object[] = [];
             setPageTotal(data.totalPage)
             data.data.forEach( product=> {
                 dataItem.push({
-                    sale : 20,
+                    sale : product.discount || 0,
                     image : product.image_url,
                     like : false,
                     title : product.product_title,
-                    star : 4,
-                    price : product.price_unit,
-                    priceOld : 120,
-                    selled : 8,
+                    star : product.rating,
+                    price : product.newPrice,
+                    priceOld : product.price_unit,
+                    selled : product.total_quantity_sold,
                     productId: product.category_id
                 })
             })
+            console.log(dataItem)
             setDataProduct(dataItem);
             setIsLoading(false)
         }
         fetchProduct()
-    }, [categoryChoose,rate, price, search, page]);
+    }, [categoryChoose,rate, price, search, page, filter]);
     const filterHandler = (e) => {
+        setPage(0)
         setFilter(e)
     }
     const items: object[] = [
-        { value: 'Relate', label: <div>Relate</div> },
-        { value: 'High', label: <div>High</div> },
-        { value: 'Low', label: <div>Low</div> },
-        { value: 'Star', label: <div>The Best Star</div> },
+        { value: 'product_title', label: <div>Relate</div> },
+        { value: 'high', label: <div>High</div> },
+        { value: 'low', label: <div>Low</div> },
+        { value: 'star', label: <div>The Best Star</div> },
     ]
     return (
         <div className={'mx-4'}>
@@ -143,7 +144,7 @@ const RenderProduct: React.FC = () => {
                     <div>
                         <Pagination
                             current={page}
-                            onChange={e => setPage(e)}
+                            onChange={e => setPage(e-1)}
                             total={pageTotal*8}
                             showSizeChange={false}
                             defaultPageSize={8}
