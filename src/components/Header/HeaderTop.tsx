@@ -17,7 +17,6 @@ const HeaderTop : React.FC = () => {
     const navigation = useNavigate();
 
     // function
-
     return (
         <div className={'bg-white justify-end flex md:justify-between items-center px-[5%] pt-3 pb-1 border-b-2'}>
             <div className={'hidden md:flex'}>

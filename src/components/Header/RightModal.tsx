@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
 import {IoClose} from "react-icons/io5";
-import {Cascader, CascaderProps, Spin, Upload, UploadFile, UploadProps} from "antd";
+import {Cascader, CascaderProps, Spin, Table, Upload, UploadFile, UploadProps} from "antd";
 import {AppContext} from "../../context/AppContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {getDataCity} from "../../Utils/GetAddress.ts";
+import {Column} from "@ant-design/plots";
 
 interface Option {
     value: string;
@@ -16,8 +17,29 @@ type Props = {
     setOpenAccount: ()=>void
 }
 
+interface DataType {
+    key : React.Key,
+    address : string
+}
+
 const RightModal : React.FC = ( props : Props) => {
     const {openAccount,setOpenAccount} = props;
+
+    const data: DataType[] = [
+        {
+            key: '1',
+            address: 'New York No. 1 Lake Park',
+        },
+        {
+            key: '2',
+            address: 'New York No. 1 Lake Park',
+        },
+        {
+            key: '3',
+            address: 'New York No. 1 Lake Park',
+        }
+    ]
+
 
     const [image, setImage] = useState<UploadFile[]>([]);
     const [option, setOption] = useState<Option[]>([]);
@@ -82,7 +104,7 @@ const RightModal : React.FC = ( props : Props) => {
 
 
     return (
-        <div className={`${!openAccount  ? 'right-[-400px]' : 'right-0'} transition-all duration-300 fixed bg-white z-20 h-[100vh] w-[400px] top-0 p-4`}>
+        <div className={`${!openAccount  ? 'right-[-400px]' : 'right-0'} transition-all duration-300 fixed bg-white z-20 h-[100vh] w-[400px] top-0 p-4 overflow-y-scroll`}>
             <div className={'flex justify-end text-3xl cursor-pointer'}>
                 <IoClose onClick={() => setOpenAccount(false)}/>
             </div>
@@ -110,15 +132,35 @@ const RightModal : React.FC = ( props : Props) => {
                 </div>
                 <div className={'flex flex-col'}>
                     <label className={'text-red-500 font-bold'}>Address :</label>
-                    <div className={'flex gap-2 flex-col'}>
-                        <div className={'flex gap-2 items-center'}>
-                            <Cascader options={option} onChange={onSelect} placeholder={address} rootClassName={'w-[50%]'} disabled={isLoadingCity || edit}/>
+                    <Table<DataType> dataSource={data} pagination={false} scroll={{y:200}}
+                                     virtual
+                                     d
+                    >
+                        <Column title="Address" dataIndex="address" key="address"
+                                render={(_: any, record: DataType) => (
+                                    <p>{record.address}</p>
+                                )}
+                        />
+                        <Column
+                            title="Action"
+                            key="action"
+                            render={(_: any, record: DataType) => (
+                                <div className={'flex-col flex gap-2'}>
+                                    <button disabled={edit} className={'bg-green-300 p-1 rounded-xl text-white'}>Set Default</button>
+                                    <button disabled={edit} className={'text-white bg-red-500 p-1 rounded-xl'}>Delete</button>
+                                </div>
+                            )}
+                        />
+                    </Table>
+                    <div className={'flex gap-4'}>
+                        <div className={'flex gap-2 items-center flex-1'} >
+                            <Cascader options={option} onChange={onSelect} placeholder={address} rootClassName={'w-[50%] flex-1'} disabled={isLoadingCity || edit}/>
                             {
                                 isLoadingCity &&
                                 <Spin />
                             }
                         </div>
-                        <input onChange={(e:ChangeEvent) => setDescription(e.target.value)} type={'text'} value={description} className={'py-2 outline-red-400 px-4'} disabled={edit}/>
+                        <button disabled={edit} className={'text-white bg-red-500 px-2 rounded-xl'}>Add</button>
                     </div>
                 </div>
                 <button className={'p-2 bg-red-500 text-white text-xl'} onClick={ () => setEdit(!edit)}>{edit ? 'Edit' : 'Save'}</button>

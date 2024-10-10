@@ -3,6 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import {getCategory} from "../../Utils/Helper.tsx";
 import {Tree, TreeDataNode} from "antd";
 import {AppContext} from "../../context/AppContext.tsx";
+import {toast} from "react-toastify";
 
 const ListCategory : React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -45,6 +46,10 @@ const ListCategory : React.FC = () => {
         const fetchCategory = async () => {
             if( categoryList.length < 1 ){
                 const data = await getCategory();
+                if( data.code === "ERR_NETWORK"){
+                    toast.error("Load Category Fail!!")
+                    return;
+                }
                 setCategoryList(data.categories)
                 createTreeCategory(data.categories)
                 setIsLoading(false)

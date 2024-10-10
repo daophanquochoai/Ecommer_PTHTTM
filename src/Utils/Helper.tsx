@@ -3,40 +3,48 @@ import {ENV} from "./Contanst.ts";
 import aboutWeb from "../components/Settings/AboutWeb.tsx";
 
 export const getProduct = async (page: number, categoryChoose : number, rate : number, price:number[], search:string, filter : string) => {
-    const text = []
-    if( categoryChoose > 0 ){
-        text.push('category_id=' +categoryChoose)
+    try{
+        const text = []
+        if( categoryChoose > 0 ){
+            text.push('category_id=' +categoryChoose)
+        }
+        if( price[1] != 0){
+            text.push(`fromPrice=${price[0]}&toPrice=${price[1]}`)
+        }
+        text.push("rate=" + rate);
+        if( search !== ''){
+            text.push('searchKey=' + search);
+        }
+        if(filter == "product_title")
+        {
+            text.push('sortKey=product_title&sortValue=ASC')
+        }
+        else if(filter === "high")
+        {
+            text.push('sortKey=price_unit&sortValue=DESC')
+        }
+        else if(filter === "low")
+        {
+            text.push('sortKey=price_unit&sortValue=ASC')
+        }else if(filter === "star")
+        {
+            text.push('sortKey=star&sortValue=DESC')
+        }
+        text.push(`page=${page+1}`)
+        const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/products` + (text.length > 0 ? '?' + text.join('&') : ''));
+        return await data.data;
     }
-    if( price[1] != 0){
-        text.push(`fromPrice=${price[0]}&toPrice=${price[1]}`)
+    catch ( e){
+        return e;
     }
-    text.push("rate=" + rate);
-    if( search !== ''){
-        text.push('searchKey=' + search);
-    }
-    if(filter == "product_title")
-    {
-        text.push('sortKey=product_title&sortValue=ASC')
-    }
-    else if(filter === "high")
-    {
-        text.push('sortKey=price_unit&sortValue=DESC')
-    }
-    else if(filter === "low")
-    {
-        text.push('sortKey=price_unit&sortValue=ASC')
-    }else if(filter === "star")
-    {
-        text.push('sortKey=star&sortValue=DESC')
-    }
-    text.push(`page=${page+1}`)
-    console.log(`${ENV.API_BASE}/products` + (text.length > 0 ? '?' + text.join('&') : ''))
-    const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/products` + (text.length > 0 ? '?' + text.join('&') : ''));
-    return await data.data;
 }
 export const getCategory = async () => {
-    const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/categories`);
-    return await data.data;
+    try{
+        const data :AxiosResponse = await axios.get(`${ENV.API_BASE}/categories`);
+        return await data.data;
+    }catch ( e){
+        return e;
+    }
 }
 
 export const getRangePrice = async () => {
@@ -50,10 +58,15 @@ export const getRangePrice = async () => {
 }
 
 export const parseJwt = (token : string) => {
-    if (!token) { return }
-    const base64Url = token.split('.')[1]
-    const base64 = base64Url.replace('-', '+').replace('_', '/')
-    return JSON.parse(window.atob(base64))
+   try{
+       if (!token) { return }
+       const base64Url = token.split('.')[1]
+       const base64 = base64Url.replace('-', '+').replace('_', '/')
+       return JSON.parse(window.atob(base64))
+   }
+   catch ( e){
+       return e;
+   }
 }
 
 export const loginAccount = async ( username : string, password : string ) => {
@@ -83,14 +96,14 @@ export const registerAccount = async ( username : string, password : string, fir
     }
 }
 
-export const detailAccount = async () => {
-    try{
-        return await axios.get(`${ENV.API_BASE}/account`,{
-            headers:{
-                "Authorization":
-            }
-        })
-    }catch (e){
-        return e;
-    }
-}
+// export const detailAccount = async () => {
+//     try{
+//         return await axios.get(`${ENV.API_BASE}/account`,{
+//             headers:{
+//                 "Authorization":
+//             }
+//         })
+//     }catch (e){
+//         return e;
+//     }
+// }

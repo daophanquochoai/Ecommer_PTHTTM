@@ -8,6 +8,7 @@ import {Select} from "antd";
 import Product_Grib from "../Body/Product_Grib.tsx";
 import {getProduct} from "../../Utils/Helper.tsx";
 import {AppContext} from "../../context/AppContext.tsx";
+import {toast} from "react-toastify";
 
 const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
     console.log(current, pageSize);
@@ -25,6 +26,11 @@ const RenderProduct: React.FC = () => {
         setIsLoading(true);
         const fetchProduct = async () => {
             const data = await getProduct(page,categoryChoose,rate, price, search, filter);
+            console.log(data)
+            if( data.code === "ERR_NETWORK"){
+                toast.error("Server Failt!!")
+                return;
+            }
             const dataItem:object[] = [];
             setPageTotal(data.totalPage)
             data.data.forEach( product=> {

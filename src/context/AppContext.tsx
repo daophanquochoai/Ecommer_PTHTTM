@@ -16,7 +16,7 @@ const AppProvider = ({children} : {children : ReactNode}) => {
 
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await 
+            // const data = await
         }
     }, []);
     const value : {

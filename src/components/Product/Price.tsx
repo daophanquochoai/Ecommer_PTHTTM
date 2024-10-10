@@ -3,6 +3,7 @@ import {Slider} from "antd";
 import {AppContext} from "../../context/AppContext.tsx";
 import {getRangePrice} from "../../Utils/Helper.tsx";
 import Skeleton from "react-loading-skeleton";
+import {toast} from "react-toastify";
 const Price : React.FC = () => {
     const {price, setPrice, setPage} = useContext(AppContext);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,6 +16,10 @@ const Price : React.FC = () => {
     useEffect(() => {
         const fetchRangePrice = async () =>{
             const data = await getRangePrice();
+            if( data.code === "ERR_NETWORK"){
+                toast.error("Load Price Fail!!")
+                return;
+            }
             setPrice([data.fromPrice, data.toPrice]);
             setIsLoading(false)
         }
