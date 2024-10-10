@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ListCategory from "./ListCategory.tsx";
 import Price from "./Price.tsx";
 import Star from "./Star.tsx";
 import RenderProduct from "./RenderProduct.tsx";
 import {FaFilter} from "react-icons/fa";
+import {AppContext} from "../../context/AppContext.tsx";
 
 const ListProduct : React.FC = () => {
     const  [filter, setFilter] = useState<boolean>(false);
-
     return (
         <div className={'mt-8'}>
             <div className={'grid grid-cols-1 md:grid-cols-[1fr_2fr] lg:grid-cols-[1fr_3fr]'}>

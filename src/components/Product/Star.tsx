@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FaStar} from "react-icons/fa";
 import {Radio, Space} from "antd";
+import {AppContext} from "../../context/AppContext.tsx";
 
 const Star : React.FC = () => {
 
-    const [checkBox, setCheckBox ] = useState<number>(1);
+    const { rate, setRate} = useContext(AppContext);
     const checkBoxHandler = (e) => {
-        setCheckBox(e.target.value)
+        setRate(e.target.value)
     }
     return (
         <div className={'bg-white mt-6 p-4'}>
@@ -14,7 +15,7 @@ const Star : React.FC = () => {
                 <span className={'text-base md:text-2xl font-bold pb-2 border-red-500 border-b-2'}>Rate</span>
             </div>
             <div className={'mt-6'}>
-                <Radio.Group onChange={(e) =>{checkBoxHandler(e)}} value={checkBox}>
+                <Radio.Group onChange={(e) =>{checkBoxHandler(e)}} value={rate}>
                     <Space direction="vertical">
                         <Radio value={5}
                         >

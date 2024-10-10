@@ -8,14 +8,14 @@ import AddWishlist from './AddWishlist.tsx';
 import QuickView from './QuickView.tsx';
 
 type Props = {
-    sale : number,
-    image : string,
-    like : boolean,
-    title : string,
-    star : number,
-    price : number,
-    priceOld : number,
-    selled : number,
+    sale : number | undefined,
+    image : string | undefined,
+    like : boolean | undefined,
+    title : string | undefined,
+    star : number | undefined,
+    price : number | undefined,
+    priceOld : number | undefined,
+    selled : number | undefined,
     isLoading: boolean
 }
 const Product : React.FC = ( props : Props ) => {
@@ -23,7 +23,7 @@ const Product : React.FC = ( props : Props ) => {
 
     return (
         <div className={'border hover:scale-105 transition-all duration-500 group cursor-pointer'}>
-            <div className={'relative'}>
+            <div className={'relative h-[50%]'}>
                 <span className={'absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm'}>{props.sale}%</span>
                 {
                     props.isLoading ?

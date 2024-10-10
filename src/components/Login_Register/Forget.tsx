@@ -29,9 +29,9 @@ const Forget : React.FC = () => {
                 label="E-mail"
                 name="email"
                 rules={[{ required: true, message: 'Please input your e-mail!' }]}
-                className={'w-[200px] sm:w-[400px] md:w-[600px]'}
+                className={'w-[200px] sm:w-[400px] md:w-[100%] text-xl'}
             >
-                <Input/>
+                <Input />
             </Form.Item>
             <div className={'mb-4'}>
                 <div className={'text-gray-400'}>

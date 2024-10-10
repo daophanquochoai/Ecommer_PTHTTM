@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { RxViewGrid } from "react-icons/rx";
 import { CiViewTimeline } from "react-icons/ci";
 import Product from "../Body/Product.tsx";
@@ -7,6 +7,7 @@ import type { PaginationProps } from 'antd';
 import {Select} from "antd";
 import Product_Grib from "../Body/Product_Grib.tsx";
 import {getProduct} from "../../Utils/Helper.tsx";
+import {AppContext} from "../../context/AppContext.tsx";
 
 const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
     console.log(current, pageSize);
@@ -15,16 +16,18 @@ const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize
 const RenderProduct: React.FC = () => {
 
     const [filter , setFilter] = useState<string>('Relate');
-    const [page, setPage] = useState<number>(1);
     const [grib, setGrib] = useState<boolean>(true);
     const [dataProduct, setDataProduct] = useState<object[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [pageTotal, setPageTotal] = useState<number>(0);
+    const {search, price, rate, categoryChoose, page, setPage} = useContext(AppContext);
 
     useEffect(() => {
+        setIsLoading(true);
         const fetchProduct = async () => {
-            const data = await getProduct();
+            const data = await getProduct(categoryChoose,rate, price, search);
             const dataItem:object[] = [];
-            console.log(data)
+            setPageTotal(data.totalPage)
             data.data.forEach( product=> {
                 dataItem.push({
                     sale : 20,
@@ -42,19 +45,9 @@ const RenderProduct: React.FC = () => {
             setIsLoading(false)
         }
         fetchProduct()
-    }, []);
+    }, [categoryChoose,rate, price, search, page]);
     const filterHandler = (e) => {
         setFilter(e)
-    }
-    const Props = {
-        sale : 20,
-        image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg',
-        like : true,
-        title : 'Microsoft Xbox One S Controller – Gears 5 Kait Diaz',
-        star : 4,
-        price : 100,
-        priceOld : 120,
-        selled : 8
     }
     const items: object[] = [
         { value: 'Relate', label: <div>Relate</div> },
@@ -108,7 +101,8 @@ const RenderProduct: React.FC = () => {
                                                              star={product.star}
                                                              price={product.price}
                                                              priceOld={product.priceOld}
-                                                             selled={product.selled}/>
+                                                             selled={product.selled}
+                                                             key={index}/>
                                                 )
                                             }
                                         </>
@@ -116,18 +110,32 @@ const RenderProduct: React.FC = () => {
                             </>
                             :
                             <>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
-                                <Product_Grib {...Props}/>
+                                {
+                                    isLoading ?
+                                        <>
+                                            <Product_Grib isLoading={true}/>
+                                            <Product_Grib isLoading={true}/>
+                                            <Product_Grib isLoading={true}/>
+                                            <Product_Grib isLoading={true}/>
+                                            <Product_Grib isLoading={true}/>
+                                        </>
+                                        :
+                                        <>
+                                            {
+                                                dataProduct.map( (product, index) =>
+                                                    <Product_Grib sale={product.sale}
+                                                             image={product.image}
+                                                             like={product.like}
+                                                             title={product.title}
+                                                             star={product.star}
+                                                             price={product.price}
+                                                             priceOld={product.priceOld}
+                                                             selled={product.selled}
+                                                             key={index}/>
+                                                )
+                                            }
+                                        </>
+                                }
                             </>
                     }
                 </div>
@@ -136,8 +144,8 @@ const RenderProduct: React.FC = () => {
                         <Pagination
                             current={page}
                             onChange={e => setPage(e)}
-                            total={100}
-                            showSizeChanger={false}
+                            total={pageTotal*8}
+                            showSizeChange={false}
                             defaultPageSize={8}
                             responsive={true}
                         />

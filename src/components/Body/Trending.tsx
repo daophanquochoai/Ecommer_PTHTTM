@@ -1,14 +1,24 @@
 import {FaRegStar} from "react-icons/fa";
 import {GiClothes} from "react-icons/gi";
 import {MdOutlineFastfood} from "react-icons/md";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchItem from "./SearchItem.tsx";
 import Skeleton from "react-loading-skeleton";
+import {getCategory} from "../../Utils/Helper.tsx";
 
 const Trending = () => {
 
     const [filter, setFilter] = useState<string>('Hot Trending');
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [category, setCategory] = useState<object[]>([]);
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            const data = await getCategory();
+            setCategory(data.categories)
+        }
+        fetchCategory()
+    }, []);
     return (
         <div className={'my-[40px]'}>
             <div className={'mx-[10%] bg-white'}>

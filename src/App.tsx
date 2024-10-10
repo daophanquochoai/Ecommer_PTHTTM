@@ -46,6 +46,8 @@ import StaffDetail from "./components/Users/StaffDetail.tsx";
 import AddStaff from "./components/Users/AddStaff.tsx";
 import AddRole from "./components/Users/AddRole.tsx";
 import EditRole from "./components/Users/EditRole.tsx";
+import ProtectedRoute from "./pages/ProtectedRoute.tsx";
+import OTP from "./pages/OTP.tsx";
 
 export const routers = [
     {
@@ -78,15 +80,11 @@ export const routers = [
             },
             {
                 path: '/cart',
-                element: <Cart />
+                element: <ProtectedRoute element={<Cart />}/>
             },
             {
                 path: '/wishlist',
-                element: <WishListPage />
-            },
-            {
-                path: '/forget',
-                element: <ForgetPage />
+                element: <ProtectedRoute element={<WishListPage />}/>
             },
             {
                 path: '/myorder',
@@ -101,6 +99,14 @@ export const routers = [
     {
         path: '/register',
         element: <RegisterPage />
+    },
+    {
+        path: '/forget',
+        element: <ForgetPage />
+    },
+    {
+        path: '/otp',
+        element: <OTP />
     },
     {
         path: '/admin',

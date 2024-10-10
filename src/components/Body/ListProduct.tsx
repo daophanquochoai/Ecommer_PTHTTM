@@ -1,5 +1,6 @@
 import {FaCaretSquareLeft, FaCaretSquareRight, FaChevronRight, FaStar} from "react-icons/fa";
 import Product from "./Product.tsx";
+import {useNavigate} from "react-router-dom";
 type Props = {
     title : string
 }
@@ -7,6 +8,8 @@ type Props = {
 
 
 const ListProduct = (props : Props) => {
+
+    const navigation = useNavigate();
     const Props = {
         sale : 20,
         image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42.jpg',
@@ -36,7 +39,7 @@ const ListProduct = (props : Props) => {
                             </div>
                             : <></>
                         }
-                        <div className={'flex items-center gap-1 cursor-pointer'}>
+                        <div className={'flex items-center gap-1 cursor-pointer'} onClick={ () => { scrollTo(0,0); navigation('/category')}}>
                             <p className={'text-sm md:text-base'}>View All</p>
                             <FaChevronRight />
                         </div>

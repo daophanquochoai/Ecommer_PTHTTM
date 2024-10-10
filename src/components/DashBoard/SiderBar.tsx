@@ -74,7 +74,7 @@ type Props = {
 const SiderBar : React.FC = (props : Props ) => {
     return (
         <div className={'border h-[100vh] py-4 bg-white'}>
-            <div className={`flex items-center py-5 justify-center`}>
+            <div className={`flex items-center py-5 justify-center px-6`}>
                 {
                     !props.props.collapsed &&
                     <>

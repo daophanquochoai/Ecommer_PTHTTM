@@ -31,10 +31,10 @@ const DashBoard : React.FC = () => {
                         </div>
                         <div className={'flex items-center gap-4'}>
                             <span>Dao Phan Quoc Hoai</span>
-                            <div className={'flex items-center'}>
+                            <div className={'flex items-center group cursor-pointer'}>
                                 <img src={'https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg'} className={'w-[36px] rounded-full'} alt={'avatar'}/>
                                 {/* group down */}
-                                <div className='group relative'>
+                                <div className='relative'>
                                     <MdOutlineExpandMore />
                                     <div className='group-hover:block hidden absolute z-[9] dropdown-menu right-0 pt-4'>
                                         <div className='flex flex-col gap-2 w-44 py-3 px-5 bg-slate-100 text-gray-500 rounded'>

@@ -3,10 +3,14 @@ import Forget from "../components/Login_Register/Forget.tsx";
 
 const ForgetPage : React.FC = () => {
     return (
-        <div className={'flex items-center justify-center py-8 flex-col'}>
-            <div className={'border p-6 items-center flex flex-col justify-center bg-red-100'}> 
-                <p className={'text-2xl text-red-500 mb-4 font-bold'}>RESET YOUR PASSWORD</p>
-                <Forget />
+        <div className={'flex items-center justify-center h-[100vh]'}>
+            <div className={'shadow_register flex flex-col items-center rounded-xl overflow-hidden'}>
+                <div className={'bg-red-500 w-full text-center p-3'}>
+                    <p className={'text-white text-2xl'}>RESET YOUR PASSWORD</p>
+                </div>
+                <div className={'p-4'}>
+                    <Forget />
+                </div>
             </div>
         </div>
     );

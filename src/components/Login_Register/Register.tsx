@@ -1,13 +1,14 @@
-import React from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import React, {useState} from 'react';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import {
     Button,
-    Form,
-    Input,
+    Form, GetProp,
+    Input, message,
     Select,
-    Upload,
+    Upload, UploadProps,
 } from 'antd';
 import {NavLink} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -18,11 +19,45 @@ const normFile = (e: any) => {
 const prefixSelector = (
     <Form.Item name="prefix" noStyle>
         <Select style={{ width: 70 }}>
-            <Option value="86">+84</Option>
+            <Select.Option value="86">+84</Select.Option>
         </Select>
     </Form.Item>
 );
+
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+const beforeUpload = (file: FileType) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+        message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        toast.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+};
 const Register : React.FC = () => {
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [imageUrl, setImageUrl] = useState<string>('')
+
+    const handleChange: UploadProps['onChange'] = (info) => {
+        if (info.file.status === 'uploading') {
+            setLoading(true);
+            return;
+        }
+        if (info.file.status === 'done') {
+            setImageUrl(info.file.response);
+        }
+    };
+
+    const uploadButton = (
+        <button style={{ border: 0, background: 'none' }} type="button">
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+    );
+
     return (
         <Form
             layout="vertical"
@@ -58,11 +93,16 @@ const Register : React.FC = () => {
                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
             </Form.Item>
             <Form.Item label="Avatar" valuePropName="fileList" getValueFromEvent={normFile}>
-                <Upload action="/upload.do" maxCount={1} listType="picture-card">
-                    <button style={{ border: 0, background: 'none' }} type="button">
-                        <PlusOutlined />
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                    </button>
+                <Upload
+                    name="avatar"
+                    listType="picture-circle"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action={'http://localhost:8080/api/image'}
+                    beforeUpload={beforeUpload}
+                    onChange={handleChange}
+                >
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
             </Form.Item>
             <div className={'mb-4'}>
