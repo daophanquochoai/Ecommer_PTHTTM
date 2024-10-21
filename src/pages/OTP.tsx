@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Button, Flex, Form, FormProps, Input, Spin, Typography} from 'antd';
 import type { GetProps } from 'antd';
 import {toast} from "react-toastify";
-import {loginAccount} from "../Utils/Helper.tsx";
-import {useNavigate} from "react-router-dom";
+import {changePassword, forgetPassword, loginAccount, postOpt} from "../Utils/Helper.tsx";
+import {useNavigate, useParams} from "react-router-dom";
 
 type OTPProps = GetProps<typeof Input.OTP>;
 
@@ -23,6 +23,7 @@ const Otp : React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigation = useNavigate();
     const [theme, setTheme] = useState<number>(0);
+    const [code, setCode] = useState<number>(0)
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -38,7 +39,6 @@ const Otp : React.FC = () => {
         return () => clearInterval(intervalId);
     }, [reSend]);
     const onChange: OTPProps['onChange'] = (text) => {
-        console.log('onChange:', text);
         setText(text);
     };
 
@@ -46,14 +46,33 @@ const Otp : React.FC = () => {
         onChange,
     };
 
-    const handleReSend = () => {
-        setTime(60);
-        // action
-        setReSend( e => e-1);
+    const handleReSend = async () => {
+        const email = new URL(window.location.href).searchParams.get("email");
+        setIsLoading(true)
+        const response = await forgetPassword(email);
+        setIsLoading(false)
+        if( response.code === "ERR_NETWORK"){
+            toast.error("NETWORK DON'T CONNECTED!!")
+            return;
+        }
+        if( response.data.code === 200 ){
+            setTime(60);
+            // action
+            setReSend( e => e-1);
+        }else{
+            toast.error(response.data.message)
+        }
     }
-
-    const handleSubmit = () => {
-        setTheme(1)
+    const handleSubmit = async () => {
+        const email = new URL(window.location.href).searchParams.get("email");
+        setIsLoading(true)
+        const response = await postOpt(email, text);
+        setIsLoading(false)
+        if( response.data.code === 200 ){
+            setTheme(1);
+        }else{
+            toast.error(response.data.message)
+        }
     }
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -63,7 +82,17 @@ const Otp : React.FC = () => {
             setIsLoading(false)
             return;
         }
-        navigation('/login');
+        const email = new URL(window.location.href).searchParams.get("email");
+        const response = await changePassword(email, values.password, values.repassword);
+        if( response.code === "ERR_NETWORK"){
+            toast.error("NETWORK DON'T CONNECTED!!")
+            return;
+        }
+        if( response.data.code === 200 ){
+            navigation('/login');
+        }else{
+            toast.error(response.data.message)
+        }
 
     };
 
@@ -77,16 +106,18 @@ const Otp : React.FC = () => {
                 <div className={'bg-red-500 p-2 items-center flex justify-center'}>
                     <p className={'text-2xl text-white font-bold'}>OPT</p>
                 </div>
-                <div className={'flex flex-col justify-center items-center p-4 gap-6'}>
-                    <p className={'text-red-300 text-xl'}>{time}</p>
-                    <Input.OTP mask="*" {...sharedProps} length={4} disabled={time === 0} size={"large"}/>
-                    {
-                        time === 0 ?
-                            <button className={'text-white border-2 border-red-500 bg-red-500 hover:bg-white hover:text-red-500 px-2 py-1 rounded-xl'} onClick={ () => handleReSend()}>Resend</button>
-                            :
+                <Spin tip={'Loading...'} spinning={isLoading}>
+                    <div className={'flex flex-col justify-center items-center p-4 gap-6'}>
+                        <p className={'text-red-300 text-xl'}>{time}</p>
+                        <Input.OTP mask="*" {...sharedProps} length={4} disabled={time === 0} size={"large"}/>
+
+                        <div className={'flex items-center gap-4'}>
+                            <button className={'text-red-500 bg-white hover:bg-red-500 hover:text-white px-2 py-1 rounded-xl'} onClick={ () => handleReSend()}>Resend</button>
+
                             <button className={'text-white border-2 border-red-500 bg-red-500 hover:bg-white hover:text-red-500 px-2 py-1 rounded-xl'} onClick={ () => handleSubmit()}>Submit</button>
-                    }
-                </div>
+                        </div>
+                    </div>
+                </Spin>
             </div>
             <div className={`shadow_register ${theme !== 1 && 'hidden'}`}>
                 <div className={'bg-red-500 p-2 items-center flex justify-center px-5'}>

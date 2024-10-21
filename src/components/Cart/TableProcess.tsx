@@ -20,21 +20,20 @@ const columns: TableProps<DataType>['columns'] = [
         render : (item) => <p className={'text-base text-gray-500'}>{item}</p>
     },
 ];
-const data: DataType[] = [
-    {
-        key: 'Subtotal',
-        name: '$216.90'
-    },
-    {
-        key: 'Shipping: Kee Kij Store',
-        name: '$216.90'
-    },
-    {
-        key: 'Total',
-        name: '$216.90'
-    }
-]
-const TableProcess : React.FC = () => {
+type Props = {
+    total : number
+}
+const TableProcess : React.FC = ( props : Props) => {
+    const data: DataType[] = [
+        {
+            key: 'Price',
+            name: `${props.total}đ`
+        },
+        {
+            key: 'Total',
+            name: `${props.total}đ`
+        }
+    ]
     return (
         <Table
             columns={columns}

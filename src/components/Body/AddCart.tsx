@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Dropdown, Modal} from "antd";
 import type { MenuProps } from 'antd';
 import {CiShoppingCart} from "react-icons/ci";
 import {NavLink} from "react-router-dom";
 import {CheckCircleTwoTone} from '@ant-design/icons';
+import {addItemToCart} from "../../Utils/Helper.tsx";
+import {toast} from "react-toastify";
+import {AppContext} from "../../context/AppContext.tsx";
 
 const items: MenuProps['items'] = [
     {
@@ -15,9 +18,23 @@ const items: MenuProps['items'] = [
       ),
     },
 ];
+type Props = {
+    id : number,
+    sale : number | undefined,
+    image : string | undefined,
+    like : boolean | undefined,
+    title : string | undefined,
+    star : number | undefined,
+    price : number | undefined,
+    priceOld : number | undefined,
+    selled : number | undefined,
+    isLoading: boolean
+}
 
-const AddCart: React.FC = () => {
+
+const AddCart: React.FC = (props : Props) => {
     const [open, setOpen] = useState(false);
+    const {cart,setCart} = useContext(AppContext)
     const showModal = () => {
         setOpen(true);
     };
@@ -28,11 +45,49 @@ const AddCart: React.FC = () => {
     const handleCancel = () => {
         setOpen(false);
     };
+    const handleAddToCart = async ( id:number, quantity : number) => {
+        const response = await addItemToCart(id, quantity);
+        if( response.code === "ERR_NETWORK"){
+            toast.error("Server Failt!!")
+            return;
+        }
+        console.log(response)
+        if(response.data.code === 200 ){
+            let item = cart.find( item => item.key === id)
+            if( item !== undefined ){
+                item.Quantity += 1;
+                setCart([
+                    ...cart.filter(item => item.key !== id),
+                    item
+                ])
+            }else{
+                const image = [];
+                image.push(props.image)
+                item =    {
+                    key : props.id,
+                    Product: {
+                        'image' : JSON.stringify(image),
+                        'title' : props.title
+                    },
+                    Price: props.price,
+                    Quantity : 1
+                }
+                setCart([
+                    ...cart,
+                    item
+                ])
+            }
+            showModal();
+        }else if( response.data.code === 401 ){
+            //
+        }else{}
+
+    }
 
     return (
         <div>
             <Dropdown menu={{ items }} placement="top" arrow={{ pointAtCenter: true }}>
-                <CiShoppingCart onClick={showModal} className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" />
+                <CiShoppingCart onClick={ () => handleAddToCart(props.id, 1)} className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top" />
             </Dropdown>
             <Modal
                 open={open}

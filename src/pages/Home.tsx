@@ -11,7 +11,7 @@ const Home = () => {
                 <Slider/>
                 <Trending />
                 <Sale />
-                <ListProduct title={'Flash Deals'}/>
+                <ListProduct title={'Hot trend'}/>
                 <ListProduct title={'Recommend To You'}/>
                 <Policy />
             </div>

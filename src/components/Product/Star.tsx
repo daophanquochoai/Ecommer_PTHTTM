@@ -10,6 +10,8 @@ const Star : React.FC = () => {
         setPage(0)
         setRate(e.target.value)
     }
+
+
     return (
         <div className={'bg-white mt-6 p-4'}>
             <div>
@@ -42,6 +44,11 @@ const Star : React.FC = () => {
                         <Radio value={1}>
                             <div className={'flex items-center gap-2 text-xs md:text-base'}>
                                 từ 1<FaStar className={'text-yellow-300'}/>
+                            </div>
+                        </Radio>
+                        <Radio value={0}>
+                            <div className={'flex items-center gap-2 text-xs md:text-base'}>
+                                tất cả
                             </div>
                         </Radio>
                     </Space>

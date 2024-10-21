@@ -4,7 +4,6 @@ const Manger : React.FC = () => {
     return (
         <div>
             <Employee />
-
         </div>
     );
 };

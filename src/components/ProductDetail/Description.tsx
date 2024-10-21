@@ -3,6 +3,8 @@ import {CiHeart} from "react-icons/ci";
 import {FaRegShareFromSquare} from "react-icons/fa6";
 import {toast} from "react-toastify";
 import Skeleton from "react-loading-skeleton";
+import {getDetailProduct} from "../../Utils/Helper.tsx";
+import {useParams} from "react-router-dom";
 type Props = {
     sale : number,
     image : string,
@@ -21,6 +23,8 @@ const Description : React.FC = ( props : Props) => {
     const [size, setSize] = useState<string>();
     const [count, setCount] = useState<number>(1);
     const [image, setImage] = useState<string>(props.image);
+    const [data, setData] = useState<object>({});
+
 
     const downCount = () => {
         if( count === 1) {
@@ -36,6 +40,12 @@ const Description : React.FC = ( props : Props) => {
         // }
         setCount(count + 1 );
     }
+
+    useEffect(() => {
+        setImage(props.image);
+        setIsLoading(false);
+    }, [props]);
+
     return (
         <div className={'p-4 bg-white'}>
             <div className={'grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4'}>
@@ -44,7 +54,7 @@ const Description : React.FC = ( props : Props) => {
                         isLoading ?
                             <Skeleton className={'w-full h-[300px]'}/>
                             :
-                            <img src={image} alt={image} className={'border cursor-pointer w-full h-full p-4 object-cover'}/>
+                            <img src={JSON.parse(image)[0]} alt="ảnh" className={'border cursor-pointer w-full h-full p-4 object-cover'}/>
                     }
                     <div className={'grid grid-cols-4 gap-4'}>
                         {
@@ -57,10 +67,17 @@ const Description : React.FC = ( props : Props) => {
                                 </>
                                 :
                                 <>
-                                    <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-12.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>
-                                    <img  onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-1.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>
-                                    <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-2.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>
-                                    <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-12-100x100.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>
+                                    {
+                                        JSON.parse(image).map((img: string, index: number) => (
+                                           <div>
+                                               <img onClick={ ()=> setImage(img)} src={img} alt={props.title} className={'w-full h-full border-2 cursor-pointer p-1'}/>
+                                           </div>
+                                        ))
+                                    }
+
+                                    {/* <img  onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-1.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
+                                    {/* <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-2.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
+                                    {/* <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-12-100x100.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
                                 </>
                         }
                     </div>
@@ -70,7 +87,7 @@ const Description : React.FC = ( props : Props) => {
                         isLoading ?
                             <Skeleton className={'h-[40px]'}/>
                             :
-                            <h2 className={'shortcut text-base md:text-2xl lg:text-3xl font-bold'}>Bluetooth Headphones With 30 mm Drivers, AUX Connectivity</h2>
+                            <h2 className={'shortcut text-base md:text-2xl lg:text-3xl font-bold'}>{props.title}</h2>
                     }
                     <div className={'flex items-center gap-4'}>
                         {
@@ -81,8 +98,8 @@ const Description : React.FC = ( props : Props) => {
                                 </>
                                 :
                                 <>
-                                    <span className={'font-bold text-base md:text-2xl'}>${props.price}</span>
-                                    <del className={'text-base text-gray-400 md:text-2xl'}>${props.priceOld}</del>
+                                    <span className={'font-bold text-base md:text-2xl'}>{props.price.toLocaleString()}đ</span>
+                                    <del className={'text-base text-gray-400 md:text-2xl'}>{props.priceOld.toLocaleString()}đ</del>
                                 </>
                         }
                     </div>
@@ -93,7 +110,7 @@ const Description : React.FC = ( props : Props) => {
                             </>
                             :
                             <p className={'shortcut text-xs md:text-base text-gray-400'}>
-                                {props.description}
+                                {props.description || 'No description available'}
                             </p>
                     }
                     <hr className={'border-1 border-black text-black'}/>

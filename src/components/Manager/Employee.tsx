@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pagination, Table} from "antd";
 
 import {Button, TableColumnsType} from "antd";
-import Util from "../components/Cart/Util.tsx";
+import {deleteEmpl, getEmployee, resetPasswordForEmployee} from "../../Utils/Helper.tsx";
+import {toast} from "react-toastify";
 interface DataType {
-    key: React.Key;
+    key: number;
     firstname: string;
     lastname: string;
     image: string;
@@ -12,97 +13,120 @@ interface DataType {
     email: string;
     username: string;
 }
-const columns: TableColumnsType<DataType> = [
-    {
-        title: 'firstname', dataIndex: 'firstname', key: 'firstname',
-        align : 'center',
-        responsive : ['md']
-    },
-    {
-        title: 'lastname', dataIndex: 'lastname', key: 'lastname',
-        align : 'center',
-    },
-    {
-        title: 'image', dataIndex: 'image', key: 'image',
-        align : 'center',
-        render : (item) => <img className={'w-[40px] h-[40px]'} src={item}/>
-    },
-    {
-        title: 'phone', dataIndex: 'phone', key: 'phone',
-        align : 'center'
-    },
-    {
-        title: 'email', dataIndex: 'email', key: 'email',
-        align : 'center'
-    },
-    {
-        title: 'username', dataIndex: 'username', key: 'username',
-        align : 'center'
-    },
-    {
-        title: 'Action',
-        key: 'Action',
-        align : 'center',
-        render : (item : DataType) => (
-            <div>
-                <Button type={"primary"} danger>DELETE</Button>
-                <Button danger>RESET</Button>
-            </div>
-        )
-    },
-];
 
-const data: DataType[] = [
-    {
-        key: 1,
-        firstname : "dao phan",
-        lastname : 'quoc hoai',
-        image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42-300x313.jpg',
-        phone : '0779127667',
-        email : 'hoai23828@gmail.com',
-        username : 'quochoai'
-    },
-    {
-        key: 1,
-        firstname : "dao phan",
-        lastname : 'quoc hoai',
-        image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42-300x313.jpg',
-        phone : '0779127667',
-        email : 'hoai23828@gmail.com',
-        username : 'quochoai'
-    },
-    {
-        key: 1,
-        firstname : "dao phan",
-        lastname : 'quoc hoai',
-        image : 'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-42-300x313.jpg',
-        phone : '0779127667',
-        email : 'hoai23828@gmail.com',
-        username : 'quochoai'
-    }
-];
 
 const Employee : React.FC = () => {
-    const [page, setPage] = useState<number>(1)
+    const [loading, setLoading] = useState<boolean>(false);
+    const [dataSource, setDataSource] = useState<DataType[]>([])
+
+    useEffect(() => {
+        const fetchInfoUser = async () => {
+            setLoading(true)
+            const response = await getEmployee();
+            setLoading(false)
+            if( response.data.code === "ERR_NETWORK"){
+                toast.error("Netword don't connected!!")
+                return;
+            }
+            if( response.data.code === 200 ){
+                const arr : DataType[] = []
+                response.data.data.forEach( item => {
+                    arr.push(  {
+                        key: item.admin_id,
+                        firstname : item.first_name,
+                        lastname : item.last_name,
+                        image : item.image_url,
+                        phone : item.phone,
+                        email : item.email,
+                        username : item.username
+                    })
+                })
+                setDataSource(arr)
+            }else{
+                toast.error(response.data.message);
+            }
+            console.log(response)
+        }
+        fetchInfoUser()
+    }, []);
+
+    const columns: TableColumnsType<DataType> = [
+        {
+            title: 'Frist Name', dataIndex: 'firstname', key: 'firstname',
+            align : 'center',
+            responsive : ['md']
+        },
+        {
+            title: 'Last Name', dataIndex: 'lastname', key: 'lastname',
+            align : 'center',
+        },
+        {
+            title: 'Image', dataIndex: 'image', key: 'image',
+            align : 'center',
+            render : (item) => <img className={'w-[40px] h-[40px]'} src={item}/>
+        },
+        {
+            title: 'Phone', dataIndex: 'phone', key: 'phone',
+            align : 'center'
+        },
+        {
+            title: 'Email', dataIndex: 'email', key: 'email',
+            align : 'center'
+        },
+        {
+            title: 'Username', dataIndex: 'username', key: 'username',
+            align : 'center'
+        },
+        {
+            title: 'Action',
+            key: 'Action',
+            align : 'center',
+            render : (item : DataType) => (
+                <div>
+                    <Button type={"primary"} danger onClick={() => handleDeleteEmpl(item.key)}>DELETE</Button>
+                    <Button primary onClick={() => handleResetPassword(item.key)}>RESET</Button>
+                </div>
+            )
+        },
+    ];
+    // function
+    const handleDeleteEmpl= async (id : number) => {
+        setLoading(true)
+        const response = await deleteEmpl(id);
+        setLoading(false)
+        console.log(response)
+        if( response.data.code === "ERR_NETWORK"){
+            toast.error("Netword don't connected!!")
+            return;
+        }
+        if( response.data.code === 200 ){
+            toast.success("Delete Employee Success")
+            setDataSource(dataSource.filter(item => item.key !== id))
+        }else{
+            toast.error(response.data.message)
+        }
+    }
+    const handleResetPassword = async (id : number) => {
+        setLoading(true)
+        const response = await resetPasswordForEmployee(id);
+        setLoading(false)
+        if( response.data.code === "ERR_NETWORK"){
+            toast.error("Netword don't connected!!")
+            return;
+        }
+        if( response.data.code === 200 ){
+            toast.success("Reset Employee Success")
+        }else{
+            toast.error(response.data.message)
+        }
+    }
     return (
         <>
             <Table
                 columns={columns}
-                dataSource={data}
-                pagination={false}
+                dataSource={dataSource}
+                loading={loading}
             />
-            <div className={'p-5 flex items-center justify-center w-full'}>
-                <div>
-                    <Pagination
-                        current={page}
-                        onChange={e => setPage(e)}
-                        total={100}
-                        showSizeChanger={false}
-                        defaultPageSize={8}
-                        responsive={true}
-                    />
-                </div>
-            </div>
         </>
     );
 };

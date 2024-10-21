@@ -1,7 +1,42 @@
-import React from 'react';
-import {Form} from "antd";
+import React, {useState} from 'react';
+import {Form, Spin} from "antd";
+import {toast} from "react-toastify";
+import {submitInfoCustomer} from "../../Utils/Helper.tsx";
 
+
+type Info = {
+    name : string,
+    email : string,
+    title : string,
+    message : string
+}
 const FormMap : React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const [data, setData] = useState<Info>({ name : '',
+                                                            email : '',
+                                                            title : '',
+                                                            message : ''})
+
+    const handleAddInfo = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        const response = await submitInfoCustomer(data.name, data.email, data.title, data.message);
+        setLoading(false)
+        if( response.data.code === "ERR_NETWORK"){
+            toast.error("Netword don't connected!!")
+            return;
+        }
+        if( response.data.code === 200 ){
+            setData({ name : '',
+                email : '',
+                title : '',
+                message : ''})
+            toast.success("WE WILL CONNECT SOON..")
+        }else{
+            toast.error(response.data.message)
+        }
+    }
     return (
         <div className={'grid grid-cols-1 lg:grid-cols-2 mt-8 bg-white'}>
             {/*  Map */}
@@ -13,29 +48,31 @@ const FormMap : React.FC = () => {
             </div>
             {/*   Form  */}
             <div className={'p-12'}>
-                <form className={'grid grid-cols-1 gap-9'}>
-                    <div className={'flex flex-col md:flex-row gap-9 justify-between'}>
-                        <div className={'flex flex-col gap-2 flex-1'}>
-                            <label className={'text-2xl'}>Your Name <span className={'text-red-500'}>*</span></label>
-                            <input required={true} placeholder={'Nguyen Van A'} className={'p-2 outline-0 border-2'}/>
-                        </div>
-                        <div className={'flex flex-col gap-2 flex-1'}>
-                            <label className={'text-2xl'}>Your Email</label>
-                            <input placeholder={"youremail@gmail.com"} className={'p-2 outline-0 border-2'}/>
-                        </div>
-                    </div>
-                    <div className={'flex gap-2 flex-col'}>
-                        <label className={'text-2xl'}>Subject</label>
-                        <input className={'p-2 outline-0 border-2'}/>
-                    </div>
-                    <div className={'flex flex-col gap-2'}>
-                        <label className={'text-2xl'}>Your Message</label>
-                        <textarea className={'outline-0 border-2 h-36'} />
-                    </div>
-                    <div>
-                        <button className={'w-full md:w-auto bg-black hover:bg-red-500 text-white py-2 px-4'}>Send Message</button>
-                    </div>
-                </form>
+               <Spin className={'Submiting'} spinning={loading}>
+                   <form onSubmit={(e) => handleAddInfo(e)} className={'grid grid-cols-1 gap-9'}>
+                       <div className={'flex flex-col md:flex-row gap-9 justify-between'}>
+                           <div className={'flex flex-col gap-2 flex-1'}>
+                               <label className={'text-2xl'}>Your Name <span className={'text-red-500'}>*</span></label>
+                               <input value={data.name} onChange={(e) => setData({...data, name : e.target.value})} required={true} placeholder={'Nguyen Van A'} className={'p-2 outline-0 border-2'}/>
+                           </div>
+                           <div className={'flex flex-col gap-2 flex-1'}>
+                               <label className={'text-2xl'}>Your Email</label>
+                               <input type={"email"} value={data.email} onChange={(e) => setData({...data, email : e.target.value})}  placeholder={"youremail@gmail.com"} className={'p-2 outline-0 border-2'}/>
+                           </div>
+                       </div>
+                       <div className={'flex gap-2 flex-col'}>
+                           <label className={'text-2xl'}>Subject</label>
+                           <input value={data.title} onChange={(e) => setData({...data, title : e.target.value})}  className={'p-2 outline-0 border-2'}/>
+                       </div>
+                       <div className={'flex flex-col gap-2'}>
+                           <label className={'text-2xl'}>Your Message</label>
+                           <textarea value={data.message} onChange={(e) => setData({...data, message : e.target.value})}  className={'outline-0 border-2 h-36 p-3'} />
+                       </div>
+                       <div>
+                           <button className={'w-full md:w-auto bg-black hover:bg-red-500 text-white py-2 px-4'}>Send Message</button>
+                       </div>
+                   </form>
+               </Spin>
             </div>
         </div>
     );

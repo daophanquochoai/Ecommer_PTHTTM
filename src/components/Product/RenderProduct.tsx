@@ -26,18 +26,18 @@ const RenderProduct: React.FC = () => {
         setIsLoading(true);
         const fetchProduct = async () => {
             const data = await getProduct(page,categoryChoose,rate, price, search, filter);
-            console.log(data)
             if( data.code === "ERR_NETWORK"){
-                toast.error("Server Failt!!")
+                toast.error("Server Fail!!")
                 return;
             }
             const dataItem:object[] = [];
             setPageTotal(data.totalPage)
             data.data.forEach( product=> {
                 dataItem.push({
+                    id : product.product_id,
                     sale : product.discount || 0,
-                    image : product.image_url,
-                    like : false,
+                    image : JSON.parse(product.image_url)[0] || "",
+                    like : product.like,
                     title : product.product_title,
                     star : product.rating,
                     price : product.newPrice,
@@ -46,7 +46,6 @@ const RenderProduct: React.FC = () => {
                     productId: product.category_id
                 })
             })
-            console.log(dataItem)
             setDataProduct(dataItem);
             setIsLoading(false)
         }
@@ -109,7 +108,11 @@ const RenderProduct: React.FC = () => {
                                                              price={product.price}
                                                              priceOld={product.priceOld}
                                                              selled={product.selled}
-                                                             key={index}/>
+                                                             key={index}
+                                                             id={product.id}
+                                                             setPrductData={setDataProduct}
+                                                             dataProduct={dataProduct}
+                                                    />
                                                 )
                                             }
                                         </>
@@ -130,15 +133,17 @@ const RenderProduct: React.FC = () => {
                                         <>
                                             {
                                                 dataProduct.map( (product, index) =>
-                                                    <Product_Grib sale={product.sale}
-                                                             image={product.image}
-                                                             like={product.like}
-                                                             title={product.title}
-                                                             star={product.star}
-                                                             price={product.price}
-                                                             priceOld={product.priceOld}
-                                                             selled={product.selled}
-                                                             key={index}/>
+                                                    <Product_Grib  sale={product.sale}
+                                                                   image={product.image}
+                                                                   like={product.like}
+                                                                   title={product.title}
+                                                                   star={product.star}
+                                                                   price={product.price}
+                                                                   priceOld={product.priceOld}
+                                                                   selled={product.selled}
+                                                                   key={index}
+                                                                   id={product.id}
+                                                    />
                                                 )
                                             }
                                         </>
@@ -149,8 +154,8 @@ const RenderProduct: React.FC = () => {
                 <div className={'p-5 flex items-center justify-center w-full'}>
                     <div>
                         <Pagination
-                            current={page}
-                            onChange={e => setPage(e-1)}
+                            current={page + 1}
+                            onChange={e => setPage(e - 1)}
                             total={pageTotal*8}
                             showSizeChange={false}
                             defaultPageSize={8}

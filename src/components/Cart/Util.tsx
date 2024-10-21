@@ -1,26 +1,39 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
+import {qunit} from "globals";
 type Props = {
-    item : number
+    quantity : object,
+    setQuantity : Function,
+    id: number
 }
 
-const Util : React.FC = ( props : Props ) => {
-    const [quantity, setQuantity] = useState<number>(props.item)
+const Util : React.FC = ( props: Props ) => {
+    const numb = props.quantity.find( item => item.key === props.id).Quantity
     const downHandler = () => {
-        if( quantity === 0 ){
-            toast('Quantity high than 0!!')
+        if( numb === 1 ){
+            toast('Quantity high than 1!!')
         }else{
-            setQuantity(quantity-1)
+            props.setQuantity( props.quantity.map( item =>{
+                if( item.key === props.id ){
+                    item.Quantity -= 1
+                }
+                return item;
+            }));
         }
     }
     const upHandler = () => {
-        setQuantity(quantity + 1)
+        props.setQuantity( props.quantity.map( item =>{
+            if( item.key === props.id ){
+                item.Quantity += 1
+            }
+            return item;
+        }));
     }
     return (
         <div className={'flex gap-2 items-center justify-center'}>
-            <button className={'border-2 px-3 py-1'} onClick={() => downHandler()}>-</button>
-            <p>{quantity}</p>
-            <button className={'border-2 px-3 py-1'} onClick={() => upHandler()}>+</button>
+            <button className={'border-2 px-3 py-1'} onClick={downHandler}>-</button>
+            <p>{numb}</p>
+            <button className={'border-2 px-3 py-1'} onClick={upHandler}>+</button>
         </div>
     );
 };

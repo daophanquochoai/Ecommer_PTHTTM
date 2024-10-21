@@ -133,12 +133,6 @@ const StaffDetail : React.FC = () => {
                         </Form.Item>
                     </Form>
                 </div>
-                <div>
-                    <p className='font-bold'>Activity history</p>  
-                    <div className='bg-white p-2 w-full mt-2 shadow-lg border border-gray-200 rounded-lg'>
-
-                    </div>  
-                </div>
             </div>
         </div>
     );

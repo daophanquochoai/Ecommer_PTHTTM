@@ -1,15 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Estimate from "./ChartEstimate.tsx";
 import {Select} from "antd";
 import {MdCrisisAlert, MdOutlinePersonPinCircle} from "react-icons/md";
 import {LiaPersonBoothSolid} from "react-icons/lia";
 import {IoCellularOutline} from "react-icons/io5";
 
+type Estimate = {
+    action: string, pv: number
+}
 const OverView : React.FC = () => {
     const today = new Date();
+    const [dataSource, setDataSource] = useState<Estimate[]>([])
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     }
+
+    useEffect(() => {
+        const fetchChart = async () => {
+
+        }
+    }, []);
     return (
         <div className={'flex flex-col gap-6'}>
             <div className={'bg-white p-6'}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BreadCrumb from "../Body/BreadCrumb.tsx";
 import {NavLink} from "react-router-dom";
 import {Button, Flex, Table, Select} from 'antd';   
@@ -6,6 +6,8 @@ import type { TableColumnsType, TableProps } from 'antd';
 import {UserAddOutlined} from '@ant-design/icons';
 import {FaFilter} from "react-icons/fa";
 import RoleList from './RoleList.tsx';
+import {getEmployee} from "../../Utils/Helper.tsx";
+import {toast} from "react-toastify";
 
 type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection'];
 
@@ -26,77 +28,81 @@ interface DataType {
     status: string;
 }
 
+interface Employee {
+    key: number;
+    firstname: string;
+    lastname: string;
+    image: string;
+    phone: string;
+    email: string;
+    username: string;
+}
+
 const columns: TableColumnsType<DataType> = [
     {
         title: 'NAME',
-        dataIndex: 'name',
-        render: (text: string) => <a><NavLink to='/admin/users/staff/detail'>{text}</NavLink></a>,
+        align: 'center',
+        render: (item : Employee) => <a><NavLink to='/admin/users/staff/detail'>{item.lastname + ' ' + item.firstname}</NavLink></a>,
     },
     {
         title: 'EMAIL',
+        align: 'center',
         dataIndex: 'email',
     }, 
     {
-        title: 'ROLE',
-        dataIndex: 'role',
+        title: 'PHONE',
+        align: 'center',
+        dataIndex: 'phone',
     },
     {
-        title: 'STATUS',
-        dataIndex: 'status',
-    },
-];
-  
-const data: DataType[] = [
-    {
-      key: '1',
-      name: 'Nguyễn Văn A',
-      email: 'nguyenvana@gmail.com',
-      role: 'Payment manager',
-      status: 'Active',
-    },
-    {
-      key: '2',
-      name: 'Nguyễn Văn A',
-      email: 'nguyenvana@gmail.com',
-      role: 'Payment manager',
-      status: 'Active',
-    },
-    {
-      key: '3',
-      name: 'Nguyễn Văn A',
-      email: 'nguyenvana@gmail.com',
-      role: 'Payment manager',
-      status: 'Active',
-    },
-    {
-      key: '4',
-      name: 'Nguyễn Văn A',
-      email: 'nguyenvana@gmail.com',
-      role: 'Payment manager',
-      status: 'Active',
+        title: 'USERNAME',
+        align : "center",
+        dataIndex: 'username',
     },
 ];
 
+
 const Staff : React.FC = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const [loading, setLoading] = useState(false);
-    const start = () => {
-        setLoading(true);
-        // ajax request after empty completing
-        setTimeout(() => {
-        setSelectedRowKeys([]);
-        setLoading(false);
-        }, 1000);
-    };
+    const [loading, setLoading] = useState<boolean>(false);
+    const [dataSource, setDataSource] = useState<Employee[]>([])
+
+    useEffect(() => {
+        const fetchInfoUser = async () => {
+            setLoading(true)
+            const response = await getEmployee();
+            setLoading(false)
+            if( response.data.code === "ERR_NETWORK"){
+                toast.error("Netword don't connected!!")
+                return;
+            }
+            if( response.data.code === 200 ){
+                const arr : Employee[] = []
+                response.data.data.forEach( item => {
+                    arr.push(  {
+                        key: item.admin_id,
+                        firstname : item.first_name,
+                        lastname : item.last_name,
+                        image : item.image_url,
+                        phone : item.phone,
+                        email : item.email,
+                        username : item.username
+                    })
+                })
+                setDataSource(arr)
+            }else{
+                toast.error(response.data.message);
+            }
+            console.log(response)
+        }
+        fetchInfoUser()
+    }, []);
+
     const  [filter, setFilter] = useState<boolean>(false);
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
-    const rowSelection: TableRowSelection<DataType> = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
 
     const hasSelected = selectedRowKeys.length > 0;
     return (
@@ -112,12 +118,11 @@ const Staff : React.FC = () => {
                                 Add
                             </Button>
                         </NavLink>
-                        <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+                        <Button type="primary" disabled={!hasSelected} loading={loading}>
                             Delete
                         </Button>
-                        {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
                     </Flex>
-                    <Table<DataType> rowSelection={rowSelection} columns={columns} dataSource={data} />
+                    <Table<DataType> columns={columns} dataSource={dataSource} />
                 </Flex>
                 <div>
                     <button onClick={() => setFilter(!filter)} className={`flex items-center gap-2 p-2  md:display ${filter ? 'bg-red-500 text-white' : 'border-2 bg-white border-red-500 text-red-500'}`}><FaFilter /> Filter</button>
@@ -198,8 +203,6 @@ const Staff : React.FC = () => {
                     </div>
                 </div>
             </div>
-            <p className='font-bold mt-5'>Role list</p>
-            <RoleList />
         </div>
     );
 };

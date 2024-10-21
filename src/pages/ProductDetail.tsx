@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {NavLink} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {NavLink, useParams} from "react-router-dom";
 import BreadCrumb from "../components/Body/BreadCrumb.tsx";
 import ListCategory from "../components/Product/ListCategory.tsx";
 import TopRating from "../components/ProductDetail/TopRating.tsx";
@@ -7,12 +7,17 @@ import Description from "../components/ProductDetail/Description.tsx";
 import Description_Rate from "../components/ProductDetail/Description_Rate.tsx";
 import Policy from "../components/Body/Policy.tsx";
 import {TbTableOptions} from "react-icons/tb";
+import {getDetailProduct} from "../Utils/Helper.tsx";
+import {toast} from "react-toastify";
 type Props = {
     title : string
 }
 const ProductDetail : React.FC = () => {
 
+
     const [option, setOption] = useState<boolean>(false)
+    const [productData, setProductData] = useState<object>(null);
+    const product_id = useParams();
 
     const bread : object[] = [
         {
@@ -22,41 +27,63 @@ const ProductDetail : React.FC = () => {
             title : <NavLink to={'/category'}>PRODUCT</NavLink>
         },
         {
-            title : <span className={'text-red-500'}>Hair Remover Shaver with Extra Replacement Head (Blue)</span>
+            title : <span className={'text-red-500'}>{productData && productData.title}</span>
         }
     ]
 
-    const Props = {
-        sale : 20,
-        image : 'https://5.imimg.com/data5/SELLER/Default/2021/5/GD/KV/CW/106693272/sup-game-box-400-in-1.jpg',
-        like : true,
-        title : 'Microsoft Xbox One S Controller – Gears 5 Kait Diaz',
-        star : 4,
-        price : 100,
-        priceOld : 120,
-        selled : 8,
-        sizre : [
-            'X',
-            'XL'
-        ],
-        description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor.\n' +
-            'Ipsum metus feugiat sem, quis fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi.\n' +
-            '\n' +
-            'It features deep integration with WooCommerce core plus several of the most popular extensions:\n' +
-            '\n' +
-            'Visual Composer\n' +
-            'Slider Revolution\n' +
-            'YITH WooCommerce Wishlist\n' +
-            'YITH WooCompare\n' +
-            'Trial & Dummy Data\n' +
-            'Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam erat mi, rutrum at sollicitudin rhoncus, ultricies posuere erat. Duis convallis, arcu nec aliquam consequat, purus felis vehicula felis, a dapibus enim lorem nec augue. Nunc facilisis sagittis ullamcorper.',
-        comments : {
-            Hoai : {
-                rate: 4,
-                content : 'product very goood'
+
+
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const response = await getDetailProduct(product_id.id);
+            if( response.code === "ERR_NETWORK"){
+                toast.error("Server Failt!!")
+                return;
             }
-        }
-    }
+            if(response.code === 200)
+            {
+                // tạo object comment
+                let objectComment = {};
+                const commentsData = response.data.comment;
+                if(commentsData.length > 0)
+                {
+                    commentsData.forEach((comment) => {
+                        objectComment[comment.infoUser.email] = {
+                            rate: parseFloat(comment.star),
+                            content : comment.content,
+                            avatar: comment.infoUser.image_url,
+                            first_name: comment.infoUser.first_name,
+                            last_name: comment.infoUser.last_name,
+                        }
+                    });
+                }
+                // end tạo object comment
+
+                setProductData({
+                    id: response.data.product_id,
+                    sale: response.data.discount || 0,
+                    image: response.data.image_url,
+                    like: response.like,
+                    title: response.data.product_title,
+                    star: response.data.rating,
+                    price: response.data.newPrice,
+                    priceOld: response.data.price_unit,
+                    selled: response.quantityProductSold,
+                    description: response.data.product_desc,
+                    comments: objectComment,
+                    commented: response.commented
+                });
+
+            }
+            else {
+                toast.error("render detail product err!")
+            }
+        };
+
+        fetchApi();
+    }, [product_id.id]);
+
 
     return (
         <div className={'mx-[5%] mt-3'}>
@@ -70,8 +97,8 @@ const ProductDetail : React.FC = () => {
                     </div>
                 </div>
                 <div>
-                    <Description {...Props}/>
-                    <Description_Rate {...Props}/>
+                    {productData && <Description {...productData} />}
+                    {productData && <Description_Rate {...productData} setProductData={setProductData} productData={productData}/>}
                 </div>
             </div>
             <Policy />

@@ -30,8 +30,8 @@ const normFile = (e: any) => {
 };
 const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-        <Select style={{ width: 70 }}>
-            <Select.Option value="86">+84</Select.Option>
+        <Select style={{ width: 70 }} defaultValue={"+84"}>
+            <Select.Option value="+84">+84</Select.Option>
         </Select>
     </Form.Item>
 );
@@ -81,9 +81,9 @@ const Register : React.FC = () => {
             return
         }
         const data = await registerAccount(values.username, values.password, values.firstName, values.lastName, values.email, values.phone, imageUrl);
-        console.log(data.data.code)
+        console.log(data)
         if( data.data.code != 200 ){
-            toast.error("Don't Authentication!!")
+            toast.error(data.data.message)
             setIsLoading(false)
         }else{
             navigation('/login');

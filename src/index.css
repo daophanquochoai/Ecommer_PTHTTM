@@ -87,9 +87,6 @@ a.active  {
     @apply bg-red-500;
 }
 
-.ant-table-tbody-virtual-holder-inner .ant-table-row .ant-table-cell{
-    @apply flex items-center justify-center;
-}
 .ant-table-row.ant-table-row-selected .ant-table-cell{
     background: rgba(239,68,68, 0.3) !important;
 }

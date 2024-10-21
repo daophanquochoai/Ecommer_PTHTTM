@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import type { FormProps } from 'antd';
 import {Button, Checkbox, Form, Input, Spin} from 'antd';
 import {NavLink, useNavigate} from "react-router-dom";
-import {loginAccount} from "../../Utils/Helper.tsx";
+import {loginAccount, parseJwt} from "../../Utils/Helper.tsx";
 import {toast} from "react-toastify";
+import {AppContext} from "../../context/AppContext.tsx";
 
 type FieldType = {
     username?: string;
@@ -12,6 +13,7 @@ type FieldType = {
 
 const Login : React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const {setIsLogin} = useContext(AppContext)
     const navigation = useNavigate();
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsLoading(true);
@@ -21,13 +23,21 @@ const Login : React.FC = () => {
             return;
         }
         const data = await loginAccount(values.username, values.password);
-        console.log(data.data.code)
         if( data.data.code != 200 ){
             toast.error("Don't Authentication!!")
             setIsLoading(false)
         }else{
             localStorage.setItem("accessToken", data.data.accessToken)
+            localStorage.setItem("refreshToken", data.data.refreshToken)
+            const token = parseJwt(localStorage.getItem("accessToken"))
+            if( token.role === 'ADMIN' || token.role === "PRODUCTMANAGER"){
+                scroll(0,0)
+                navigation('/admin')
+                return
+            }
+            setIsLogin(true)
             navigation('/');
+            scroll(0,0)
         }
     };
 

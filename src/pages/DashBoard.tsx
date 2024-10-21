@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import SiderBar from "../components/DashBoard/SiderBar.tsx";
 import {TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarRightCollapseFilled} from "react-icons/tb";
 import {MdOutlineExpandMore} from "react-icons/md";
 import {Outlet} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 import RightModal from '../components/Header/RightModal.tsx';
+import {AppContext} from "../context/AppContext.tsx";
 
 type Props = {
     collapsed : boolean,
@@ -15,6 +16,7 @@ const DashBoard : React.FC = () => {
     const props : Props = {
         collapsed : collapsed
     }
+    const {info} = useContext(AppContext);
     return (
         <div className={'bg-primary'}>
             <div className={'flex'}>
@@ -30,9 +32,9 @@ const DashBoard : React.FC = () => {
                             }
                         </div>
                         <div className={'flex items-center gap-4'}>
-                            <span>Dao Phan Quoc Hoai</span>
+                            <span>{ info.first_name + ' ' + info.last_name}</span>
                             <div className={'flex items-center group cursor-pointer'}>
-                                <img src={'https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg'} className={'w-[36px] rounded-full'} alt={'avatar'}/>
+                                <img src={info.image_url} className={'w-[36px] rounded-full'} alt={'avatar'}/>
                                 {/* group down */}
                                 <div className='relative'>
                                     <MdOutlineExpandMore />

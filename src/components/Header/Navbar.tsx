@@ -4,10 +4,9 @@ import {Link, NavLink} from "react-router-dom";
 import {LuShoppingCart} from "react-icons/lu";
 import {FaChevronLeft, FaRegHeart} from "react-icons/fa";
 import {IoMenu} from "react-icons/io5";
-import {IoMdClose} from "react-icons/io";
 
 const Navbar = () => {
-    const {logo} = useContext(AppContext)
+    const {logo, cart} = useContext(AppContext)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     return (
         <div>
@@ -38,7 +37,7 @@ const Navbar = () => {
                         <NavLink to={'/wishlist'}><FaRegHeart /></NavLink>
                     </div>
                     <div className={'text-3xl p-1 relative'}>
-                        <span className={'absolute top-[-3px] text-center text-white right-[-8px] w-[20px] h-[20px] text-base bg-red-500 rounded-full leading-[20px]'}>0</span>
+                        <span className={'absolute top-[-3px] text-center text-white right-[-8px] w-[20px] h-[20px] text-base bg-red-500 rounded-full leading-[20px]'}>{cart.length}</span>
                         <NavLink to={'/cart'}><LuShoppingCart /></NavLink>
                     </div>
                 </div>

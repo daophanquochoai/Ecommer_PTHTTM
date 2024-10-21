@@ -48,6 +48,8 @@ import AddRole from "./components/Users/AddRole.tsx";
 import EditRole from "./components/Users/EditRole.tsx";
 import ProtectedRoute from "./pages/ProtectedRoute.tsx";
 import OTP from "./pages/OTP.tsx";
+import AcceptCart from "./pages/AcceptCart.tsx";
+import OrderManage from "./pages/OrderManage.tsx";
 
 export const routers = [
     {
@@ -88,7 +90,7 @@ export const routers = [
             },
             {
                 path: '/myorder',
-                element: <MyOrder />
+                element: <ProtectedRoute elemant={<MyOrder/>} />
             }
         ]
     },
@@ -109,6 +111,10 @@ export const routers = [
         element: <OTP />
     },
     {
+        path: "/acceptCart",
+        element: <ProtectedRoute element={<AcceptCart/>}/>,
+    },
+    {
         path: '/admin',
         element: <DashBoard />,
         children: [
@@ -117,12 +123,12 @@ export const routers = [
                 element: <OverView />
             },
             {
-                path: 'chat',
-                element: <Chat />
-            },
-            {
                 path: 'manager',
                 element: <Manger />
+            },
+            {
+                path: 'order',
+                element: <OrderManage />
             },
             {
                 path: 'settings',
@@ -163,7 +169,7 @@ export const routers = [
                         element: <AddProduct />
                     },
                     {
-                        path: 'edit-product',
+                        path: ':id',
                         element: <EditProduct />
                     },
                     {
@@ -183,14 +189,6 @@ export const routers = [
                     {
                         index : true,
                         element: <UserList />
-                    },
-                    {
-                        path: 'customer',
-                        element: <Customer />
-                    },
-                    {
-                        path: 'customer/detail',
-                        element: <CustomerDetail />
                     },
                     {
                         path: 'staff',

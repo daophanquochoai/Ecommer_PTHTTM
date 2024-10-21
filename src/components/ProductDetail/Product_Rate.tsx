@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Rate} from "antd";
 import Skeleton from "react-loading-skeleton";
 
@@ -15,6 +15,11 @@ type Props = {
 
 const ProductRate : React.FC= ( props : Props ) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, [props]);
+
     return (
         <div>
             <div className={'grid grid-cols-[1fr_2fr] items-center gap-4 py-2 cursor-pointer group'}>
@@ -49,8 +54,8 @@ const ProductRate : React.FC= ( props : Props ) => {
                                 </>
                                 :
                                 <>
-                                    <del className={'text-gray-400'}>${props.priceOld}</del>
-                                    <span className={'font-bold'}>${props.price}</span>
+                                    <del className={'text-gray-400'}>${props.priceOld.toLocaleString()}đ</del>
+                                    <span className={'font-bold'}>${props.price.toLocaleString()}đ</span>
                                 </>
                         }
                     </div>

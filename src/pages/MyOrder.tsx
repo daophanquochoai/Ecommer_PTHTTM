@@ -1,8 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import BreadCrumb from "../components/Body/BreadCrumb.tsx";
-import TableItem from "../components/Cart/TableItem.tsx";
-import TableProcess from "../components/Cart/TableProcess.tsx";
+
 import Policy from "../components/Body/Policy.tsx";
 import {Divider, Steps} from "antd";
 import TableOrder from "../components/MyOrder/TableOrder.tsx";

@@ -7,7 +7,7 @@ import {toast} from "react-toastify";
 const Price : React.FC = () => {
     const {price, setPrice, setPage} = useContext(AppContext);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
+    const [objectPrice, setObjectPrice] = useState<number[]>([])
     const handleTrans = (e) => {
        setPrice(e)
         setPage(0)
@@ -21,6 +21,7 @@ const Price : React.FC = () => {
                 return;
             }
             setPrice([data.fromPrice, data.toPrice]);
+            setObjectPrice([data.fromPrice, data.toPrice]);
             setIsLoading(false)
         }
         fetchRangePrice()
@@ -38,8 +39,10 @@ const Price : React.FC = () => {
                         </>
                         :
                         <>
-                            <Slider range={{ draggableTrack: true }} max={price[1]}
-                                    defaultValue={price}
+                            <Slider range={{ draggableTrack: true }} min={objectPrice[0]}
+                                    max={objectPrice[1]}
+                                    value={price}
+                                    onChange={(e) => setPrice(e)}
                                     trackStyle={{ backgroundColor: "#ef4444" }}
                                     handleStyle={{ boxShadow: "#ef4444" }}
                             />

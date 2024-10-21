@@ -18,12 +18,12 @@ const items: MenuItem[] = [
     },
     {
         key: '2',
-        icon: <CiChat1 />,
         label: (
-            <NavLink to={'/admin/chat'}>
-                Chat
+            <NavLink to={'/admin/order'}>
+                Order
             </NavLink>
         ),
+        icon: <GrUserManager />,
     },
     {
         key: '3',

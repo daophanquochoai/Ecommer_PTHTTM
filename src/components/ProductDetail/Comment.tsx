@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Avatar, Card, Rate} from "antd";
 import { LikeOutlined } from '@ant-design/icons';
-type Props = {
-    comments : object
-}
-
 const actions: React.ReactNode[] = [
     <LikeOutlined key={'like'} />
 ];
 
+type Props = {
+    content : string,
+    star : number,
+    image : string,
+    name : string
+}
 const Comment : React.FC = (props : Props) => {
+
+
     return (
         <div className={'p-4'}>
             <div>
@@ -22,13 +26,14 @@ const Comment : React.FC = (props : Props) => {
                 {/*        <Rate disabled defaultValue={4} />*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-                <Card loading={false}>
+                <Card>
                     <Card.Meta
-                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
-                        title="Very Good"
+                        avatar={<Avatar src={props.image} />}
+                        title={props.content}
                         description={
                             <>
-                                <Rate disabled defaultValue={4} />
+                                <p>{props.name}</p>
+                                <Rate disabled defaultValue={props.star} />
                             </>
                         }
                     />
