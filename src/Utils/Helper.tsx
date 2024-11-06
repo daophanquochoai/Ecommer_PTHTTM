@@ -752,3 +752,126 @@ export const updateInfoOfAmin = async (dataObject : object) => {
         return e;
     }
 }
+
+export const getYearForRevenue = async () => {
+    try {
+        return await axios.get(`${ENV.API_BASE}/admin/reports/get-year`,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+    }catch (e){
+        return e;
+    }
+}
+
+export const getRevenueByYear = async ( year : number ) => {
+    try {
+        return await axios.get(`${ENV.API_BASE}/admin/reports/total-revenue/` + year,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+    }catch (e){
+        return e;
+    }
+}
+
+export const getCategoryById = async ( id : number)=> {
+    try {
+        return await axios.get(`${ENV.API_BASE}/admin/categories/detail/` + id,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+    }catch (e){
+        return e;
+    }
+}
+
+export const editCategory = async ( id : number, title : string, image : string, parent : number) => {
+    try {
+        return await axios.patch(`${ENV.API_BASE}/admin/categories/edit/` + id,
+            {
+                image_url : image,
+                parent_category_id : parent,
+                category_title : title,
+            },
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+    }catch (e){
+        return e;
+    }
+}
+
+//----order user-----
+export const getOrdersHistory = async ()=> {
+    try {
+        const data = await axios.get(`${ENV.API_BASE}/order/history`,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+        return data.data
+    }catch (e){
+        return e;
+    }
+}
+
+export const getOrdersRecent = async ()=> {
+    try {
+        const data = await axios.get(`${ENV.API_BASE}/order/recent`,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+        return data.data
+    }catch (e){
+        return e;
+    }
+}
+
+export const getListOrdersStatus = async ()=> {
+    try {
+        const data = await axios.get(`${ENV.API_BASE}/order/status`,
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+        return data.data
+    }catch (e){
+        return e;
+    }
+}
+
+export const userCancelOrder = async (id: number) => {
+    try {
+        const data = await axios.patch(`${ENV.API_BASE}/order/cancel/${id}`,{},
+            {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+        return data.data
+    }catch (e){
+        return e;
+    }
+}
+//----end order user-----

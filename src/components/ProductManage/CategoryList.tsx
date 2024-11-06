@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Flex, Pagination, Table} from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import {NavLink} from "react-router-dom";
 import {deleteCategory, getCategoryAdmin, getProductOfCategoryAdmin} from "../../Utils/Helper.tsx";
 import {toast} from "react-toastify";
+import {AppContext} from "../../context/AppContext.tsx";
 
 type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection'];
 
@@ -15,8 +16,7 @@ interface DataType {
 const columns: TableColumnsType<DataType> = [
     {
       title: 'CATEGORY NAME',
-      dataIndex: 'name',
-      render: (text: string) => <NavLink to='/admin/products/edit-category'>{text}</NavLink>,
+      render: (text: DataType) => <NavLink to={'/admin/products/edit-category/' + text.key}>{text.name}</NavLink>,
     },
   ];
 
@@ -32,6 +32,7 @@ const CategoryList : React.FC = ( props: Props) => {
     const [data, setData] = useState<DataType[]>([])
     const [page, setPage] = useState<number>(0)
     const [pageTotal, setPageTotal] = useState<number>(0)
+    const {setCategoryList} = useContext(AppContext)
 
 
     useEffect(() => {
@@ -43,6 +44,7 @@ const CategoryList : React.FC = ( props: Props) => {
             }
             if(response.code === 200)
             {
+                setCategoryList(response.data)
                 setPageTotal(response.totalPage)
                 let dataItem: DataType[] = []
                 for (const item of response.data) {
@@ -52,6 +54,10 @@ const CategoryList : React.FC = ( props: Props) => {
                     })
                 };
                 setData(dataItem)
+
+            }
+            else{
+                toast.error("You don't role")
             }
         };
         fetchApi()

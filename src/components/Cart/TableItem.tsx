@@ -84,11 +84,12 @@ const TableItem : React.FC = (props : Props) => {
                 toast.error("Netword don't connected!!")
                 return;
             }
+            // console.log("-------------------------cart-----------------------", response.data)
             if( response.data.code === 200 ){
                 const data : DataType[] = []
                 response.data.data.forEach( (item, index) => {
                     data.push({
-                        key : item.cart_item_id,
+                        key : item.product_id,
                         Product: {
                             'image' : item.infoProduct.image_url,
                             'title' : item.infoProduct.product_title

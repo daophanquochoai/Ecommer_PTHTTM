@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 import BreadCrumb from "../components/Body/BreadCrumb.tsx";
 
@@ -15,6 +15,9 @@ const bread : object[] = [
     }
 ]
 const MyOrder : React.FC = () => {
+
+    const [current, setCurrent] = useState(-1);
+
     return (
         <div>
             <div className={'mx-[5%] mt-3'}>
@@ -25,7 +28,7 @@ const MyOrder : React.FC = () => {
                         <div>
                             <Steps
                                 progressDot
-                                current={3}
+                                current={current}
                                 direction="vertical"
                                 items={[
                                     {
@@ -40,15 +43,15 @@ const MyOrder : React.FC = () => {
                                         title: 'In Transit',
                                         description: 'The order has been shipped and is on its way to the customer.',
                                     },
-                                    {
-                                        title: 'Delivered',
-                                        description: 'The order has successfully reached the customer, and the transaction is complete.',
-                                    }
+                                    // {
+                                    //     title: 'Delivered',
+                                    //     description: 'The order has successfully reached the customer, and the transaction is complete.',
+                                    // }
                                 ]}
                             />
                         </div>
                         <div>
-                            <TableOrder />
+                            <TableOrder setCurrent={setCurrent} current={current}/>
                         </div>
                     </div>
                     <Divider>History</Divider>

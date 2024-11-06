@@ -14,7 +14,6 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import ForgetPage from "./pages/ForgetPage.tsx";
 import DashBoard from "./pages/DashBoard.tsx";
 import OverView from "./components/DashBoard/OverView.tsx";
-import Chat from "./components/DashBoard/Chat.tsx";
 import Manger from "./pages/Manger.tsx";
 import Settings from "./pages/Settings.tsx";
 import ListSetting from "./components/Settings/ListSetting.tsx";
@@ -39,8 +38,7 @@ import Order from "./components/Service/OrderDelivery/Order.tsx";
 import Delivery from "./components/Service/OrderDelivery/Delivery.tsx";
 import Users from "./pages/Users.tsx";
 import UserList from "./components/Users/UserList.tsx";
-import Customer from "./components/Users/Customer.tsx";
-import CustomerDetail from "./components/Users/CustomerDetail.tsx";
+
 import Staff from "./components/Users/Staff.tsx";
 import StaffDetail from "./components/Users/StaffDetail.tsx";
 import AddStaff from "./components/Users/AddStaff.tsx";
@@ -90,7 +88,7 @@ export const routers = [
             },
             {
                 path: '/myorder',
-                element: <ProtectedRoute elemant={<MyOrder/>} />
+                element: <ProtectedRoute element={<MyOrder/>} />
             }
         ]
     },
@@ -177,38 +175,8 @@ export const routers = [
                         element: <AddCategory />
                     },
                     {
-                        path: 'edit-category',
+                        path: 'edit-category/:id',
                         element: <EditCategory />
-                    }
-                ]
-            },
-            {
-                path: 'users',
-                element: <Users />,
-                children: [
-                    {
-                        index : true,
-                        element: <UserList />
-                    },
-                    {
-                        path: 'staff',
-                        element: <Staff />
-                    },
-                    {
-                        path: 'staff/detail',
-                        element: <StaffDetail />
-                    },
-                    {
-                        path: 'staff/add-staff',
-                        element: <AddStaff />
-                    },
-                    {
-                        path: 'staff/add-role',
-                        element: <AddRole />
-                    },
-                    {
-                        path: 'staff/edit-role',
-                        element: <EditRole />
                     }
                 ]
             }

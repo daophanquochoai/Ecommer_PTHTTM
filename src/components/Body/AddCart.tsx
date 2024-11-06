@@ -51,7 +51,7 @@ const AddCart: React.FC = (props : Props) => {
             toast.error("Server Failt!!")
             return;
         }
-        console.log(response)
+        // console.log(response)
         if(response.data.code === 200 ){
             let item = cart.find( item => item.key === id)
             if( item !== undefined ){

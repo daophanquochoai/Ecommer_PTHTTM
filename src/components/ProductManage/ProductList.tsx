@@ -70,7 +70,7 @@ const ProductList : React.FC = (props : Props) => {
                 props.setProductStock(dataItem.length)
                 setData(dataItem)
             }else{
-                toast.error(response.message)
+                // toast.error(response.message)
             }
 
 

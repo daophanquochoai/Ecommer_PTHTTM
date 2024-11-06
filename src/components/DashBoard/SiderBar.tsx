@@ -54,17 +54,6 @@ const items: MenuItem[] = [
         ),
         icon: <ProductOutlined />
 
-    },
-
-    {
-        key: '6',
-        label: (
-            <NavLink to={'/admin/users'}>
-                Users
-            </NavLink>
-        ),
-        icon: <UserOutlined />
-
     }
 ];
 
