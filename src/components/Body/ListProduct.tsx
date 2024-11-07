@@ -34,10 +34,15 @@ const ListProduct = (props : Props) => {
             if( response.data.code === 200 ){
                 const arr : ProductType[] = []
                 response.data.data.forEach( item => {
+                    let image = "";
+                    if(item.image_url)
+                    {
+                        image = JSON.parse(item.image_url)[0];
+                    }
                     arr.push({
                         id : item.product_id,
                         sale : item.discount,
-                        image : JSON.parse(item.image_url)[0],
+                        image : image,
                         like : item.like,
                         title : item.product_title,
                         star : item.rating,

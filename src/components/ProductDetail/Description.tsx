@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {CiHeart} from "react-icons/ci";
 import {FaRegShareFromSquare} from "react-icons/fa6";
 import {toast} from "react-toastify";
 import Skeleton from "react-loading-skeleton";
-import {getDetailProduct} from "../../Utils/Helper.tsx";
-import {useParams} from "react-router-dom";
+import {addItemToCart, addProductToWishlist, getDetailProduct} from "../../Utils/Helper.tsx";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {AppContext} from "../../context/AppContext.tsx";
+import {HeartOutlined, HeartTwoTone} from "@ant-design/icons";
+import {Modal} from "antd";
 type Props = {
     sale : number,
     image : string,
@@ -23,8 +26,85 @@ const Description : React.FC = ( props : Props) => {
     const [size, setSize] = useState<string>();
     const [count, setCount] = useState<number>(1);
     const [image, setImage] = useState<string>(props.image);
+    const [like, setLike] = useState<boolean>(props.like);
     const [data, setData] = useState<object>({});
+    const {cart,setCart} = useContext(AppContext);
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
+
+    // console.log("---------props product detail-------", props)
+
+    const handleAddToCart = async ( id:number, quantity : number) => {
+        console.log(id, quantity);
+        const response = await addItemToCart(id, quantity);
+        if( response.code === "ERR_NETWORK"){
+            toast.error("Server Failt!!")
+            return;
+        }
+        console.log(response)
+        if(response.data.code === 200 ){
+            let item = cart.find( item => item.key === id)
+            console.log("cart: ", cart);
+            if( item !== undefined ){
+                console.log("item EXIST=========== ", item)
+                item.Quantity += count;
+                setCart([
+                    ...cart.filter(item => item.key !== id),
+                    item
+                ])
+            }else{
+                const image = [];
+                image.push(props.image)
+                item =    {
+                    key : id,
+                    Product: {
+                        'image' : JSON.stringify(image),
+                        'title' : props.title
+                    },
+                    Price: props.price,
+                    Quantity : 1
+                }
+                setCart([
+                    ...cart,
+                    item
+                ])
+            }
+            toast.success("Added product to cart successfully!")
+            setCount(1)
+        }else if( response.data.code === 401 ){
+            //
+        }else{}
+
+    }
+
+    const showModal = () => {
+        const fetchApi = async () => {
+
+            const response = await addProductToWishlist(props.id);
+            if( response.code === "ERR_NETWORK"){
+                toast.error("Server Failt!!")
+                return;
+            }
+
+            if(response.code === 200)
+            {
+                setOpen(true)
+                setLike(!like)
+            }else{
+                toast.error(response.message)
+            }
+        }
+        fetchApi();
+    };
+
+    const handleOk = () => {
+        setOpen(false);
+        navigate("/wishlist");
+    };
+    const handleCancel = () => {
+        setOpen(false);
+    };
 
     const downCount = () => {
         if( count === 1) {
@@ -75,9 +155,9 @@ const Description : React.FC = ( props : Props) => {
                                         ))
                                     }
 
-                                    {/* <img  onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-1.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
-                                    {/* <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-2.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
-                                    {/* <img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-12-100x100.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
+                                     {/*<img  onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-1.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
+                                     {/*<img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-2.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
+                                     {/*<img onClick={ (e)=> {setImage(e.target.currentSrc)}} src={'https://demo-60.woovinapro.com/wp-content/uploads/2021/01/product-12-100x100.jpg'} alt={props.title} className={'border-2 cursor-pointer p-2'}/>*/}
                                 </>
                         }
                     </div>
@@ -114,20 +194,20 @@ const Description : React.FC = ( props : Props) => {
                             </p>
                     }
                     <hr className={'border-1 border-black text-black'}/>
-                    <div className={'flex gap-4'}>
-                        {
-                            isLoading ?
-                                <>
-                                    <Skeleton className={'h-[40px] w-[50px]'}/>
-                                    <Skeleton className={'h-[40px] w-[50px]'}/>
-                                </>
-                                :
-                                <>
-                                    <button onClick={()=>setSize('X')} className={`px-4 py-2 border-2 ${size === 'X' ? 'border-red-500 bg-red-500 text-white' : ' hover:border-red-500 hover:bg-red-500 hover:text-white'} font-bold`}>X</button>
-                                    <button onClick={()=>setSize('XL')} className={`px-4 py-2 border-2 ${size === 'XL' ? 'border-red-500 bg-red-500 text-white' : 'hover:border-red-500 hover:bg-red-500 hover:text-white'} hover:border-red-500 hover:bg-red-500 hover:text-white font-bold`}>XL</button>
-                                </>
-                        }
-                    </div>
+                    {/*<div className={'flex gap-4'}>*/}
+                    {/*    {*/}
+                    {/*        isLoading ?*/}
+                    {/*            <>*/}
+                    {/*                <Skeleton className={'h-[40px] w-[50px]'}/>*/}
+                    {/*                <Skeleton className={'h-[40px] w-[50px]'}/>*/}
+                    {/*            </>*/}
+                    {/*            :*/}
+                    {/*            <>*/}
+                    {/*                <button onClick={()=>setSize('X')} className={`px-4 py-2 border-2 ${size === 'X' ? 'border-red-500 bg-red-500 text-white' : ' hover:border-red-500 hover:bg-red-500 hover:text-white'} font-bold`}>X</button>*/}
+                    {/*                <button onClick={()=>setSize('XL')} className={`px-4 py-2 border-2 ${size === 'XL' ? 'border-red-500 bg-red-500 text-white' : 'hover:border-red-500 hover:bg-red-500 hover:text-white'} hover:border-red-500 hover:bg-red-500 hover:text-white font-bold`}>XL</button>*/}
+                    {/*            </>*/}
+                    {/*    }*/}
+                    {/*</div>*/}
                     <div className={'grid grid-cols-1 md:grid-cols-2 items-center gap-2'}>
                         <div className={'flex'}>
                             {
@@ -148,7 +228,7 @@ const Description : React.FC = ( props : Props) => {
                                 isLoading ?
                                     <Skeleton className={'w-[100px] h-[40px]'}/>
                                     :
-                                    <button className={'bg-black text-white px-4 py-2 hover:bg-red-500'}>Add to Cart</button>
+                                    <button onClick={() => handleAddToCart( props.id, count)} className={'bg-black text-white px-4 py-2 hover:bg-red-500'}>Add to Cart</button>
                             }
                         </div>
                     </div>
@@ -161,8 +241,28 @@ const Description : React.FC = ( props : Props) => {
                                 </>
                                 :
                                 <>
-                                    <CiHeart className={`text-3xl ${props.like ? 'text-red-500' : ''} hover:text-red-500 cursor-pointer`} />
+                                    {like ? <HeartTwoTone twoToneColor="#eb2f96" className={'text-2xl'} onClick={showModal} data-bs-toggle="tooltip" data-bs-placement="top"/> : <CiHeart onClick={showModal} className={'text-2xl hover:text-red-500 cursor-pointer'} data-bs-toggle="tooltip" data-bs-placement="top"/>}
                                     <FaRegShareFromSquare className={`text-2xl hover:text-red-500 cursor-pointer`}/>
+
+                                    <Modal
+                                        open={open}
+                                        footer={null}
+                                        centered
+                                        onOk={handleOk}
+                                        onCancel={handleCancel}
+                                    >
+                                        <div className={'flex flex-col items-center justify-center'}>
+                                            {like ? <HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '80px'}}/> : <HeartOutlined style={{ fontSize: '80px'}} />}
+                                            {/*<HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '80px'}}/>*/}
+                                            {!like ? <p className='text-gray-400 mt-5 text-xl'>Product removed from Wishlist</p> : <p className='text-gray-400 mt-5 text-xl'>Product added to Wishlist</p>}
+
+                                            <NavLink to={'/wishlist'}>
+                                                <button onClick={handleOk} className='bg-black hover:bg-red-500 text-white py-2 px-4 mt-5'>
+                                                    VIEW WISHLIST
+                                                </button>
+                                            </NavLink>
+                                        </div>
+                                    </Modal>
                                 </>
                         }
                     </div>

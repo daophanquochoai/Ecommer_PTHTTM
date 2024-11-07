@@ -37,7 +37,7 @@ const ProductGrib : React.FC = ( props : Props ) => {
                         <>
                             <div className={'flex flex-col absolute h-full bg-white right-[-68px] top-0 p-3 items-center justify-center gap-3 group-hover:right-0 transition-all duration-300'}>
                                 <AddCart {...props}/>
-                                <AddWishlist />
+                                <AddWishlist {...props}/>
                                 <QuickView {...props} />
                             </div>
                         </>

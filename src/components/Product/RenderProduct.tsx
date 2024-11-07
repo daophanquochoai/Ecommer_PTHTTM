@@ -26,6 +26,7 @@ const RenderProduct: React.FC = () => {
         setIsLoading(true);
         const fetchProduct = async () => {
             const data = await getProduct(page,categoryChoose,rate, price, search, filter);
+            // console.log("---reponse get list product-------", data.data);
             if( data.code === "ERR_NETWORK"){
                 toast.error("Server Fail!!")
                 return;
@@ -143,6 +144,8 @@ const RenderProduct: React.FC = () => {
                                                                    selled={product.selled}
                                                                    key={index}
                                                                    id={product.id}
+                                                                   setPrductData={setDataProduct}
+                                                                   dataProduct={dataProduct}
                                                     />
                                                 )
                                             }

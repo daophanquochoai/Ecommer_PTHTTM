@@ -28,7 +28,7 @@ const Product : React.FC = ( props : Props ) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // console.log(props)
+        // console.log("---------props star not exist------", props)
     }, []);
 
     return (

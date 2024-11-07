@@ -23,6 +23,7 @@ const TopRating : React.FC= () => {
     useEffect(() => {
         const fetchApi = async () => {
             const response = await getTopRating();
+            console.log("----------top rating--------", response.data);
             if( response.code === "ERR_NETWORK"){
                 toast.error("Server Failt!!")
                 return;

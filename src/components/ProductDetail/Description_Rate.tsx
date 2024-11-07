@@ -111,7 +111,7 @@ const DescriptionRate : React.FC = ( props : Props) => {
     };
 
     useEffect(() => {
-        console.log(props.productData)
+        // console.log(props.productData)
     }, [props.productData]);
     return (
         <div className={'bg-white p-2'}>

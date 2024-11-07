@@ -13,7 +13,10 @@ export const getProduct = async (page: number, categoryChoose : number, rate : n
         if( price[1] != 0){
             text.push(`fromPrice=${price[0]}&toPrice=${price[1]}`)
         }
-        text.push("rate=" + rate);
+        if(rate)
+        {
+            text.push("rate=" + rate);
+        }
         if( search !== ''){
             text.push('searchKey=' + search);
         }
