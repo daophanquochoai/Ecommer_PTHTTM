@@ -89,6 +89,16 @@ export const loginAccount = async ( username : string, password : string ) => {
     }
 }
 
+export const loginByGoogle = async ( token ) => {
+    try{
+        return await axios.post(`${ENV.API_BASE}/user/login-by-google`,{
+            token: token
+        })
+    }catch (e){
+        return e;
+    }
+}
+
 export const registerAccount = async ( username : string, password : string, first_name: string, last_name: string, email: string, phone: string, image_url: string ) => {
     try{
         return await axios.post(`${ENV.API_BASE}/user/register`,{
@@ -605,9 +615,9 @@ export const addCategoryByAdmin = async ( categoryId : number, categoryTitle : s
     }
 }
 
-export const getBlogByPage = async ( page : number)=> {
+export const getBlogByPage = async ( page : number, searchKey: string)=> {
     try {
-        return await axios.get(`${ENV.API_BASE}/blogs?limit=5&page=` + page,
+        return await axios.get(`${ENV.API_BASE}/blogs?limit=5&page=` + page + "&searchKey=" + searchKey,
         )
     }catch (e){
         return e;

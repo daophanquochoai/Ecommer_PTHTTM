@@ -35,12 +35,13 @@ const Blogs : React.FC = () => {
     const [totalPage, setTotalPage] = useState<number>(1)
     const [loadingSub, setLoadingSub] = useState<boolean>(false)
     const [subSource, setSubSource] = useState<Blog[]>([])
+    const [searchInput, setSearchInput] = useState<string>('');
 
 
     useEffect(() => {
         const fetchBlog = async () => {
             setLoading(true);
-            const response = await getBlogByPage(page);
+            const response = await getBlogByPage(page, searchInput);
             setLoading(false)
             if( response.data.code === "ERR_NETWORK"){
                 toast.error("Netword don't connected!!")
@@ -66,6 +67,40 @@ const Blogs : React.FC = () => {
         }
         fetchBlog()
     }, [page]);
+
+
+    const handleSearch = async () => {
+        setLoading(true);
+        // Giả sử hàm getBlog nhận tham số tìm kiếm là searchInput
+        const response = await getBlogByPage(page, searchInput);
+        setLoading(false);
+        if (response.data.code === 200) {
+            // Xử lý dữ liệu trả về từ tìm kiếm
+            const arr : Blog[] = []
+            response.data.data.forEach( item => {
+                arr.push({
+                        blog_id : item.blog_id,
+                        content : item.content,
+                        image_url : JSON.parse(item.image_url) === null ? '' : JSON.parse(item.image_url)[0],
+                        createdAt : new Date(item.createdAt).toLocaleDateString(),
+                        title : item.title
+                    }
+                )
+            })
+            setBlogSource(arr)
+            setTotalPage(response.data.totalPage)
+        } else {
+            toast.error(response.data.message);
+        }
+
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
 
     useEffect(() => {
         const fetchBlogRecent = async () => {
@@ -132,7 +167,10 @@ const Blogs : React.FC = () => {
                 <div className={'flex flex-col gap-4'}>
                     <div className={'p-4 bg-white'}>
                         <span className={'pb-2 border-b-2 border-red-500 text-xs sm:text-base lg:text-2xl font-bold'}>Search</span>
-                        <input className={'mt-6 outline-0 p-2 border w-full'} placeholder={'Search'}/>
+                        <input value={searchInput}
+                               onChange={(e) => setSearchInput(e.target.value)}
+                               onKeyDown={handleKeyDown}
+                               className={'mt-6 outline-0 p-2 border w-full'} placeholder={'Search'}/>
                     </div>
                     <div>
                         <ListCategory />

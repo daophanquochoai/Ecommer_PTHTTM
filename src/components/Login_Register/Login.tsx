@@ -2,9 +2,10 @@ import React, {useContext, useState} from 'react';
 import type { FormProps } from 'antd';
 import {Button, Checkbox, Form, Input, Spin} from 'antd';
 import {NavLink, useNavigate} from "react-router-dom";
-import {loginAccount, parseJwt} from "../../Utils/Helper.tsx";
+import {loginAccount, loginByGoogle, parseJwt} from "../../Utils/Helper.tsx";
 import {toast} from "react-toastify";
 import {AppContext} from "../../context/AppContext.tsx";
+import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
 
 type FieldType = {
     username?: string;
@@ -44,6 +45,9 @@ const Login : React.FC = () => {
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
        toast.error("Field didn't filled!!")
     };
+
+
+
 
     return (
         <Spin tip={"Login..."} spinning={isLoading}>
@@ -89,6 +93,7 @@ const Login : React.FC = () => {
                         Submit
                     </Button>
                 </Form.Item>
+
             </Form>
         </Spin>
     );

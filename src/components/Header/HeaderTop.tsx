@@ -24,6 +24,7 @@ const HeaderTop : React.FC = () => {
         if( response.data.code === 200 ){
             setIsLogin(false)
             localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
             navigation('/login')
         }else {
             toast.error(response.data.message)
