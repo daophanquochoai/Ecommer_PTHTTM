@@ -31,7 +31,7 @@ const FooterTop = () => {
                 <div>
                     <h5 className={'text-xl font-bold'}>Mekog</h5>
                     <ul>
-                        <li><NavLink onClick={()=>scrollTo(0,0)} to={'/product'} className={'text-gray-400'}>Product</NavLink></li>
+                        <li><NavLink onClick={()=>scrollTo(0,0)} to={'/category'} className={'text-gray-400'}>Product</NavLink></li>
                         <li><NavLink onClick={()=>scrollTo(0,0)} to={'/cart'} className={'text-gray-400'}>Cart</NavLink></li>
                         <li><NavLink onClick={()=>scrollTo(0,0)} to={'/wishlist'} className={'text-gray-400'}>WishList</NavLink></li>
                     </ul>

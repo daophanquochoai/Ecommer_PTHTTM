@@ -27,6 +27,13 @@ import AddProduct from "./components/ProductManage/AddProduct.tsx";
 import EditProduct from "./components/ProductManage/EditProduct.tsx";
 import AddCategory from "./components/ProductManage/AddCategory.tsx";
 import EditCategory from "./components/ProductManage/EditCategory.tsx";
+import BlogManage from "./pages/BlogManage.tsx";
+import BlogList from "./components/BlogManage/BlogList.tsx";
+import AddBlog from "./components/BlogManage/AddBlog.tsx";
+import EditBlog from "./components/BlogManage/EditBlog.tsx";
+import ContactManage from "./pages/ContactManage.tsx";
+import ContactList from "./components/ContactManage/ContactList.tsx";
+import ResponseContact from "./components/ContactManage/ResponseContact.tsx";
 import {Spin} from "antd";
 import {useEffect, useState} from "react";
 import ProductDetail from "./pages/ProductDetail.tsx";
@@ -177,6 +184,38 @@ export const routers = [
                     {
                         path: 'edit-category/:id',
                         element: <EditCategory />
+                    }
+                ]
+            },
+            {
+                path: 'blogs',
+                element: <BlogManage />,
+                children: [
+                    {
+                        index : true,
+                        element: <BlogList />
+                    },
+                    {
+                        path: 'add-blog',
+                        element: <AddBlog />
+                    },
+                    {
+                        path: ':id',
+                        element: <EditBlog />
+                    }
+                ]
+            },
+            {
+                path: 'contact',
+                element: <ContactManage />,
+                children: [
+                    {
+                        index : true,
+                        element: <ContactList />
+                    },
+                    {
+                        path: ':id',
+                        element: <ResponseContact />
                     }
                 ]
             }

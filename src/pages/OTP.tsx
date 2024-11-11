@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Button, Flex, Form, FormProps, Input, Spin, Typography} from 'antd';
 import type { GetProps } from 'antd';
 import {toast} from "react-toastify";
 import {changePassword, forgetPassword, loginAccount, postOpt} from "../Utils/Helper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
+import {AppContext} from "../context/AppContext.tsx";
+import {Link} from "react-router-dom";
 
 type OTPProps = GetProps<typeof Input.OTP>;
 
@@ -100,11 +102,19 @@ const Otp : React.FC = () => {
         toast.error("Field didn't filled!!")
     };
 
+    const {logo} = useContext(AppContext);
+
     return (
-        <div className={'flex h-[100vh] justify-center items-center'}>
-            <div className={`shadow_register ${ theme !== 0 && 'hidden'}`}>
-                <div className={'bg-red-500 p-2 items-center flex justify-center'}>
-                    <p className={'text-2xl text-white font-bold'}>OPT</p>
+        <div className={'flex flex-col items-center justify-center pb-96 bg-gray-200'}>
+            <div className='w-full mb-10 items-center bg-white flex h-20'>
+                <Link to={'/'} className='ml-20' >
+                    <img className={'w-[100px]'} src={logo} alt={"logo"}/>
+                </Link>
+                <p className={'ml-3 text-xl font-bold'}>Account</p>
+            </div>
+            <div className={`shadow_register ${ theme !== 0 && 'hidden'} 'items-center bg-white flex flex-col justify-center shadow_register rounded-xl overflow-hidden`}>
+                <div className={'bg-red-500 p-2 w-full items-center flex justify-center'}>
+                    <p className={'text-2xl text-white font-bold'}>OTP</p>
                 </div>
                 <Spin tip={'Loading...'} spinning={isLoading}>
                     <div className={'flex flex-col justify-center items-center p-4 gap-6'}>
