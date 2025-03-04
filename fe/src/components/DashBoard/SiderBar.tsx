@@ -1,0 +1,127 @@
+import React, {useContext} from 'react';
+import {GetProp, Menu, MenuProps} from "antd";
+import {SettingOutlined, ProductOutlined, UserOutlined, ProfileOutlined, ContactsOutlined} from '@ant-design/icons';
+import {GrOverview, GrUserManager} from "react-icons/gr";
+import {NavLink} from "react-router-dom";
+import {CiChat1} from "react-icons/ci";
+import {AppContext} from "../../context/AppContext.tsx";
+
+type MenuItem = GetProp<MenuProps, 'items'>[number];
+
+const items: MenuItem[] = [
+    {
+        key: '1',
+        icon: <GrOverview />,
+        label: (
+            <NavLink to={'/admin'}>
+                Overview
+            </NavLink>
+        ),
+    },
+    {
+        key: '2',
+        label: (
+            <NavLink to={'/admin/order'}>
+                Order
+            </NavLink>
+        ),
+        icon: <GrUserManager />,
+    },
+    {
+        key: '3',
+        label: (
+            <NavLink to={'/admin/manager'}>
+                Manager
+            </NavLink>
+        ),
+        icon: <GrUserManager />,
+    },
+
+    {
+        key: '4',
+        label: (
+            <NavLink to={'/admin/settings'}>
+                Settings
+            </NavLink>
+        ),
+        icon: <SettingOutlined />,
+    },
+
+    {
+        key: '5',
+        label: (
+            <NavLink to={'/admin/products'}>
+                Products
+            </NavLink>
+        ),
+        icon: <ProductOutlined />
+
+    },
+    {
+        key: '6',
+        label: (
+            <NavLink to={'/admin/blogs'}>
+                Blogs
+            </NavLink>
+        ),
+        icon: <ProfileOutlined />
+    },
+    {
+        key: '7',
+        label: (
+            <NavLink to={'/admin/contact'}>
+                Contact
+            </NavLink>
+        ),
+        icon: <ContactsOutlined />
+    }
+];
+
+type Props = {
+    collapsed : boolean,
+}
+const SiderBar : React.FC = (props : Props ) => {
+
+    const {info} = useContext(AppContext)
+
+    const filteredItems = items.filter((item) => {
+        if (info.role === "ADMIN") {
+            // ADMIN sẽ thấy tất cả các mục
+            return true;
+        } else {
+            // chỉ hiển thị các mục được phép
+            return !['1', '3', '4'].includes(item.key); // Key 1, 2, 4 là Overview, Manager, Settings
+        }
+    });
+
+    // console.log(info);
+
+    return (
+        <div className={'border h-[100vh] py-4 bg-white'}>
+            <div className={`flex items-center py-5 justify-center px-6`}>
+                {
+                    !props.props.collapsed &&
+                    <>
+                        <div></div>
+                        <img src={'https://demo-60.woovinapro.com/wp-content/uploads/2022/03/logo.png'} alt={'logo'}/>
+                    </>
+                }
+            </div>
+            <div>
+                <div>
+                    <div>
+                        <Menu
+                            defaultSelectedKeys={['1']}
+                            defaultOpenKeys={['sub1']}
+                            items={filteredItems}
+                            className={'max-h-[80vh] overflow-y-scroll'}
+                            inlineCollapsed={props.props.collapsed}
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SiderBar;
